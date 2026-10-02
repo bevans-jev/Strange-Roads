@@ -1,4 +1,3 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Strange Roads</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -53,12 +52,53 @@ h1{font-family:var(--display);font-weight:400;font-size:20px;margin:0;line-heigh
 .howto b{font-weight:500;color:var(--ink)}
 .nogl[hidden]{display:none}
 .nogl{position:fixed;inset:0;display:grid;place-items:center;padding-inline:24px;text-align:center;font-size:13px;line-height:1.7;color:var(--dim)}
-.modes{display:flex;gap:16px}
+.modes{display:flex;gap:16px;flex-wrap:wrap}
 .modes button{background:none;border:0;border-bottom:1px solid transparent;padding:3px 0;font:500 10px/1 var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--dim);cursor:pointer}
 .modes button:hover{color:var(--ink)}
 .modes button[aria-pressed="true"]{color:var(--ink);border-bottom-color:var(--cab)}
 .lives{margin:0;font-size:12px;line-height:1;letter-spacing:.35em;color:var(--cab);text-shadow:0 0 10px rgba(170,100,255,.7)}
 .lives[hidden]{display:none}
+.modes button.on,.modes button[aria-expanded="true"]{color:var(--ink);border-bottom-color:var(--cab)}
+.testpanel{position:fixed;left:20px;top:calc(env(safe-area-inset-top,0px) + 10px);z-index:4;width:min(500px,calc(100vw - 40px));max-height:calc(100vh - 20px);overflow-y:auto;padding:12px;background:rgba(9,5,18,.94);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid rgba(185,138,255,.22);border-radius:10px;--ink:#efe6ff;--dim:rgba(239,230,255,.5);--cab:#b98aff}
+.testpanel[hidden]{display:none}
+.tabs{display:flex;gap:16px;align-items:baseline;margin:0 6px 10px}
+.tabs button{background:none;border:0;border-bottom:1px solid transparent;padding:3px 0;font:500 10px/1 var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--dim);cursor:pointer}
+.tabs button:hover{color:var(--ink)}
+.tabs button[aria-pressed="true"]{color:var(--ink);border-bottom-color:var(--cab)}
+.tabs .close{margin-left:auto}
+.bosslist{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:2px}
+.bosslist[hidden]{display:none}
+.bosslist p{grid-column:1/-1;margin:0 0 6px;padding-inline:6px;font-size:10px;letter-spacing:.08em;color:var(--dim)}
+.bosslist button{display:block;text-align:left;background:none;border:0;border-radius:6px;padding:6px;font:12px/1.35 var(--mono);color:var(--ink);cursor:pointer}
+.bosslist button small{display:block;margin-top:2px;font-size:10px;color:var(--dim)}
+.bosslist button:hover{background:rgba(185,138,255,.1)}
+.bosslist button[aria-current="true"],.bosslist button[aria-pressed="true"]{background:rgba(185,138,255,.16);color:var(--cab)}
+.bosslist button[aria-pressed="true"]::before{content:"✓ "}
+.bosslist p .link{display:inline;padding:0;font-size:10px;color:var(--cab);text-decoration:underline}
+body.pick-open .top{opacity:1}
+/* Maggot Brain's inverted world: the HUD goes dark so it reads on white */
+body.inv .left,body.inv .ann,body.inv .bossbar,body.inv #setBtn{--ink:#1a0306;--dim:rgba(26,3,6,.66);--cab:#7a0010}
+body.inv h1,body.inv .ann-title,body.inv .score,body.inv .lives,body.inv .combo{text-shadow:none}
+body.inv .boss-name{color:#7a0010;text-shadow:none}
+body.inv .boss-track{background:rgba(122,0,16,.2)}
+body.inv .boss-fill{background:#1a0306;box-shadow:none}
+body.inv.ice .left,body.inv.ice .ann,body.inv.ice .bossbar,body.inv.ice #setBtn{--ink:#06163a;--dim:rgba(6,22,58,.66);--cab:#0b3a8a}
+body.inv.ice .boss-name{color:#0b3a8a}
+body.inv.ice .boss-track{background:rgba(11,58,138,.2)}
+body.inv.ice .boss-fill{background:#06163a}
+.ups{margin:0;max-width:min(260px,calc(100vw - 40px));font-size:10px;line-height:1.6;letter-spacing:.08em;color:var(--dim);text-wrap:balance}
+.ups[hidden]{display:none}
+.bossbar{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 20px);transform:translateX(-50%);width:min(360px,calc(100vw - 200px));min-width:140px;display:grid;gap:7px;justify-items:center;pointer-events:none;z-index:1}
+.bossbar[hidden]{display:none}
+.boss-name{margin:0;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#ff7aa8;text-shadow:0 0 12px rgba(255,60,120,.6);white-space:nowrap}
+.boss-track{width:100%;height:3px;border-radius:2px;background:rgba(255,90,140,.18);overflow:hidden}
+.boss-fill{height:100%;background:linear-gradient(90deg,#ff3d7f,#b36bff);box-shadow:0 0 10px rgba(255,60,130,.8);transform-origin:left center;transition:transform .15s}
+.ann{position:fixed;left:0;right:0;top:26%;display:grid;justify-items:center;gap:6px;padding-inline:24px;text-align:center;pointer-events:none;z-index:3;transition:opacity 1.1s}
+.ann[hidden]{display:none}
+.ann.out{opacity:0}
+.ann-kick{margin:0;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--dim)}
+.ann-title{margin:0;font-family:var(--display);font-size:clamp(28px,5.5vw,48px);line-height:1.05;color:var(--cab);text-shadow:0 0 26px rgba(150,80,255,.7);text-wrap:balance}
+.ann-sub{margin:0;font-size:12px;letter-spacing:.06em;color:var(--ink);text-wrap:balance}
 .sp{margin:0 0 14px;padding-bottom:14px;border-bottom:1px solid rgba(185,138,255,.18);display:grid;gap:8px}
 .sp label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--cab)}
 .sp-row{display:flex;gap:8px}
@@ -84,9 +124,24 @@ h1{font-family:var(--display);font-weight:400;font-size:20px;margin:0;line-heigh
     <div class="modes" role="group" aria-label="Mode">
       <button type="button" data-mode="vibe" aria-pressed="true">Vibe</button>
       <button type="button" data-mode="game" aria-pressed="false">Game</button>
+      <button type="button" id="testBtn" aria-expanded="false" aria-controls="testPanel">Testing</button>
+    </div>
+    <div id="testPanel" class="testpanel" hidden>
+      <div class="tabs">
+        <button type="button" id="bossBtn" aria-pressed="true">Bosses</button>
+        <button type="button" id="upBtn" aria-pressed="false">Upgrades</button>
+        <button type="button" id="testClose" class="close">Close</button>
+      </div>
+      <div id="bossList" class="bosslist">
+        <p>Pick one to fight it right now</p>
+      </div>
+      <div id="upList" class="bosslist" hidden>
+        <p>Switch any on to try it. They work in Game and in boss fights, and scores don't count while any are on. <button type="button" id="upClear" class="link">Clear all</button></p>
+      </div>
     </div>
     <p id="score" class="score" hidden><span id="pts">0</span><span id="combo" class="combo"></span></p>
     <p id="livesRow" class="lives" hidden aria-label="Lives"><span id="lives">◆◆◆</span></p>
+    <p id="upsRow" class="ups" hidden></p>
   </div>
   <div class="ctrls">
     <button id="setBtn" type="button" aria-expanded="false" aria-controls="setlist">Setlist</button>
@@ -106,9 +161,20 @@ h1{font-family:var(--display);font-weight:400;font-size:20px;margin:0;line-heigh
         <span>Game sounds</span>
         <button id="snd" type="button" aria-pressed="false">Off</button>
       </div>
-      <p class="howto"><b>WASD</b> or arrows to drive · <b>Space</b> to fire. In Game mode, shoot the shapes instead of hitting them, dodge the shadows, and catch a tear for an extra life.</p>
+      <p class="howto"><b>WASD</b> or arrows to drive · <b>Space</b> to fire. In Game mode, shoot the shapes instead of hitting them, dodge the shadows and the eyes' pink shots. Each life takes two hits, and a tear gives you a life back. You earn a random upgrade at 6,000 points and then at wider and wider gaps, plus one for every boss you beat. A boss shows up every 25,000 points. Use Bosses, top left, to fight any boss right away, and Upgrades to switch any upgrade on.</p>
     </div>
   </div>
+</div>
+
+<div id="bossBar" class="bossbar" hidden>
+  <p id="bossName" class="boss-name"></p>
+  <div class="boss-track"><div id="bossFill" class="boss-fill"></div></div>
+</div>
+
+<div id="ann" class="ann" hidden aria-live="polite">
+  <p id="annKick" class="ann-kick"></p>
+  <p id="annTitle" class="ann-title"></p>
+  <p id="annSub" class="ann-sub"></p>
 </div>
 
 <div id="over" class="over" hidden>
@@ -150,15 +216,27 @@ h1{font-family:var(--display);font-weight:400;font-size:20px;margin:0;line-heigh
   vec3 pal(float t){ return 0.5 + 0.5*cos(TAU*(t + vec3(0.0, 0.33, 0.67))); }
   mat2 unrot(float a){ float c = cos(a), s = sin(a); return mat2(c, -s, s, c); }
   float hash(vec2 p){ p = fract(p*vec2(123.34, 456.21)); p += dot(p, p + 45.32); return fract(p.x*p.y); }
+  // blackout: the only light is the cab's headlights, a small glow around it, and the boss's flare
+  uniform vec4 uLamp; uniform vec4 uFlare; uniform float uDark;
+  float lamp(vec2 p){
+    if (uDark < 0.001) return 1.0;
+    vec2 q = unrot(uLamp.z)*(p - uLamp.xy);
+    float near = exp(-length(q)/55.0);
+    float cone = smoothstep(0.52, 0.16, abs(atan(q.y, q.x)))*smoothstep(640.0, 120.0, q.x)*step(0.0, q.x);
+    float fl = uFlare.z*exp(-length(p - uFlare.xy)/130.0);
+    return mix(1.0, 0.015 + 0.985*clamp(near + cone + fl, 0.0, 1.0), uDark);
+  }
   `;
 
   // Pass 1: the crisp scene (shapes, ripples, bolts, tear, cab) as signed-distance glow
   const FS_SCENE = COMMON + `
   uniform vec2 uRes; uniform float uDpr; uniform float uTime;
-  uniform int uN;  uniform vec4 uSA[24]; uniform vec4 uSB[24];
+  uniform int uN;  uniform vec4 uSA[32]; uniform vec4 uSB[32];
   uniform int uRN; uniform vec4 uRA[12]; uniform vec4 uRB[12];
-  uniform int uBN; uniform vec4 uBo[10];
-  uniform vec4 uCar; uniform vec4 uTear; uniform float uCarVis;
+  uniform int uBN; uniform vec4 uBo[24];
+  uniform int uON; uniform vec4 uOrb[64];
+  uniform vec4 uBeam; uniform float uBeamOn; uniform float uBeamGap;
+  uniform vec4 uCar; uniform vec4 uTear; uniform float uCarVis; uniform float uShield; uniform float uBig;
   out vec4 o;
   float sdPoly(vec2 p, float r, float n){
     float an = 3.14159265/n;
@@ -213,8 +291,50 @@ h1{font-family:var(--display);font-weight:400;font-size:20px;margin:0;line-heigh
     }
     if (type < 3.5) return sdMoon(q - vec2(0.5*size, 0.0), size*prm, size, size*0.86);
     if (type < 4.5) return sdVesica(q, size*1.15, size*0.72);
-    // 5: shadow, a jagged void that pulses
-    return sdStar(q, size*(1.0 + 0.07*sin(uTime*5.0 + ph*3.0)), 7.0, 2.4) - 1.5;
+    // enemies — 5: shadow, a jagged void that pulses
+    if (type < 5.5) return sdStar(q, size*(1.0 + 0.07*sin(uTime*5.0 + ph*3.0)), 7.0, 2.4) - 1.5;
+    // 6: watcher, a dark eye
+    if (type < 6.5) return sdVesica(q, size*1.15, size*0.72);
+    // bosses — 7: a big slow mandala
+    if (type < 7.5) return sdStar(q, size*(1.0 + 0.035*sin(uTime*2.0)), n, 2.0 + n*0.17) - 3.0;
+    // 8: a lobed blob that squirms
+    if (type < 8.5){
+      float a = atan(q.y, q.x);
+      float R = size*(0.84 + 0.1*cos(n*a + 0.8*sin(uTime*1.3)) + 0.05*sin(3.0*a - uTime*2.1) + 0.035*sin(7.0*a + uTime*1.7));
+      return (length(q) - R)*0.75;
+    }
+    // 9: swept wings, leading edge toward +x
+    if (type < 9.5) return sdMoon(vec2(-q.x - size*0.3, q.y*0.72), size*0.55, size, size*0.94)*0.85;
+    // 10: a plain disc (moon, satellites)
+    if (type < 10.5) return length(q) - size;
+    // 11: a disc with soft rays
+    if (type < 11.5){
+      float a = atan(q.y, q.x);
+      return (length(q) - size*(0.78 + 0.22*pow(abs(cos(n*0.5*a + uTime*0.3)), 3.0)))*0.7;
+    }
+    // 12: a giant teardrop, point up
+    if (type < 12.5) return sdTear(vec2(q.x, -q.y + 0.35*size), size*0.62, size*0.06, size*1.25);
+    // 13: a cut gem
+    if (type < 13.5){ vec2 g = abs(q); return (g.x/0.74 + g.y - size)*0.6; }
+    // 14: a hollow ring
+    if (type < 14.5) return abs(length(q) - size*0.78) - size*0.2;
+    // 15: a heavy cross
+    if (type < 15.5) return min(sdRBox(q, vec2(size, size*0.3), 6.0), sdRBox(q, vec2(size*0.3, size), 6.0));
+    // 16: a turning spiral
+    if (type < 16.5){
+      float a = atan(q.y, q.x), r = length(q);
+      return (r - size*(0.8 + 0.16*sin(n*a - 5.0*log(r/size + 0.25) + uTime*1.2)))*0.6;
+    }
+    // 17: a crescent moon
+    if (type < 17.5) return sdMoon(q + vec2(size*0.2, 0.0), size*0.5, size, size*0.8);
+    // 18: a plain triangle
+    if (type < 18.5) return sdPoly(q, size - 4.0, 3.0) - 4.0;
+    // 19: a snowflake
+    if (type < 19.5) return sdStar(q, size, 6.0, 4.4) - 2.5;
+    // 20: a flower whose petals open and close
+    float fa = atan(q.y, q.x);
+    float open = 0.5 + 0.5*sin(uTime*0.9);
+    return (length(q) - size*(0.45 + (0.3 + 0.25*open)*pow(abs(cos(n*0.5*fa)), 0.7)))*0.65;
   }
 
   void main(){
@@ -224,7 +344,7 @@ h1{font-family:var(--display);font-weight:400;font-size:20px;margin:0;line-heigh
     vec3 col = vec3(0.0);
     float dark = 0.0;
 
-    for (int i = 0; i < 24; i++){
+    for (int i = 0; i < 32; i++){
       if (i >= uN) break;
       vec4 A = uSA[i]; vec4 B = uSB[i];
       vec2 q = p - A.xy;
@@ -234,12 +354,112 @@ h1{font-family:var(--display);font-weight:400;font-size:20px;margin:0;line-heigh
       float type = floor(B.x/16.0 + 0.001), n = B.x - type*16.0;
       float d = shapeSD(q, A.z, type, n, B.y, A.w);
       if (type > 4.5){
+        // every enemy is a dark void with a hot rim; B.z = hit flash, B.y = charge
         float od = max(d, 0.0);
         float inside = 1.0 - smoothstep(-aa, aa, d);
         dark = max(dark, max(inside*0.94, exp(-od/18.0)*0.6)*B.w);
         vec3 rim = mix(vec3(0.95, 0.1, 0.32), vec3(0.55, 0.12, 0.95), 0.5 + 0.5*sin(uTime*2.0 + A.w));
-        float rl = 1.0 - smoothstep(0.9, 0.9 + aa*1.5, abs(d));
-        col += rim*(rl*1.1 + exp(-od/7.0)*0.35)*B.w;
+        rim = mix(rim, vec3(1.0, 0.92, 0.96), B.z);
+        float rw = type > 6.5 ? 1.6 : 0.9;
+        float rl = 1.0 - smoothstep(rw, rw + aa*1.5, abs(d));
+        col += rim*(rl*1.1 + exp(-od/7.0)*0.35 + exp(-od/40.0)*0.12*step(6.5, type))*B.w;
+        if (type > 5.5 && type < 6.5){
+          float pd = length(q - vec2(A.z*0.3, 0.0)) - A.z*(0.2 + 0.1*B.y);
+          col += vec3(1.0, 0.25, 0.55)*((1.0 - smoothstep(-aa, aa, pd))*(0.9 + 1.4*B.y) + exp(-max(pd, 0.0)/6.0)*(0.3 + 0.7*B.y))*B.w;
+        }
+        vec3 hot = mix(vec3(1.0, 0.3, 0.55), vec3(1.0), B.z);
+        if (type > 6.5 && type < 7.5){
+          // mandala: counter-spinning rings and a core; B.y dims the core (mirage copies)
+          vec2 q2 = unrot(-A.w*2.6)*q;
+          float ring = abs(sdPoly(q2, A.z*0.52, max(3.0, floor(n*0.5 + 0.5))));
+          col += rim*(1.0 - smoothstep(1.0, 1.0 + aa*1.5, ring))*0.9*B.w;
+          float ring2 = abs(sdStar(unrot(A.w*1.7)*q, A.z*0.34, n, 2.4));
+          col += vec3(1.0, 0.35, 0.6)*(1.0 - smoothstep(0.8, 0.8 + aa*1.5, ring2))*0.7*B.w;
+          float core = length(q) - A.z*(0.13 + 0.03*sin(uTime*4.0));
+          col += hot*((1.0 - smoothstep(-aa, aa, core))*1.3 + exp(-max(core, 0.0)/10.0)*0.7)*B.w*(0.2 + 0.8*B.y);
+        } else if (type > 7.5 && type < 8.5){
+          // brain: squirming folds and a split down the middle
+          float w = sin(q.x*0.15 + 2.0*sin(q.y*0.1 + uTime*0.7))*sin(q.y*0.14 + 2.0*sin(q.x*0.09 - uTime*0.6));
+          float folds = (1.0 - smoothstep(0.0, 0.14, abs(w)))*smoothstep(0.0, -10.0, d);
+          col += hot*folds*0.55*B.w;
+          col += rim*(1.0 - smoothstep(1.0, 1.0 + aa*1.5, abs(q.x)))*inside*0.8*B.w;
+        } else if (type > 8.5 && type < 9.5){
+          // wings: a bright spine that flares before a dive (B.y)
+          float spine = abs(d + A.z*0.16);
+          col += mix(vec3(0.85, 0.75, 1.0), vec3(1.0), B.y)*(1.0 - smoothstep(0.8, 0.8 + aa*1.5, spine))*(0.5 + 1.2*B.y)*inside*B.w;
+          col += hot*exp(-od/14.0)*0.5*B.y*B.w;
+        } else if (type > 9.5 && type < 10.5){
+          // moon: icy rings and craters; small ones are satellites
+          vec3 ice = mix(vec3(0.5, 0.9, 1.0), vec3(1.0), B.z);
+          if (A.z > 40.0){
+            float L = length(q);
+            float r1 = abs(L - A.z*0.62), r2 = abs(L - A.z*0.34);
+            float c1 = abs(length(q - vec2(A.z*0.3, -A.z*0.22)) - A.z*0.17);
+            float c2 = abs(length(q + vec2(A.z*0.34, -A.z*0.3)) - A.z*0.1);
+            float ln = min(min(r1, r2), min(c1, c2));
+            col += ice*(1.0 - smoothstep(0.8, 0.8 + aa*1.5, ln))*0.75*B.w;
+            col += ice*exp(-L/(A.z*0.25))*0.5*B.w;
+          } else {
+            col += ice*((1.0 - smoothstep(-aa, aa, length(q) - A.z*0.4)) + exp(-od/8.0)*0.4)*B.w;
+          }
+        } else if (type > 12.5){
+          float L = length(q), ang = atan(q.y, q.x), ln = 1e3;
+          vec3 tint = hot;
+          float amt = 0.9;
+          if (type < 13.5){
+            // gem: facets that split the light into colours
+            float gy = q.y + A.z*0.3;
+            ln = min(abs(gy), min(abs(q.x - gy*0.5), abs(q.x + gy*0.5)));
+            ln = min(ln, min(abs(q.x - gy*1.4 - A.z*0.0), abs(q.x + gy*1.4)));
+            tint = mix(pal(uTime*0.2 + q.x*0.012 + q.y*0.009), vec3(1.0), B.z);
+            col += tint*inside*(0.12 + 0.1*sin(uTime*3.0 + q.x*0.1))*B.w;
+          } else if (type < 14.5){
+            // ring: a bright inner band, ticks going round, and a hot eye in the middle
+            ln = abs(L - A.z*0.78);
+            col += hot*inside*(1.0 - smoothstep(0.0, 0.2, abs(sin(ang*6.0 + uTime*1.5))))*0.5*B.w;
+            col += hot*exp(-L/(A.z*0.16))*0.9*B.w;
+          } else if (type < 15.5){
+            ln = abs(d + A.z*0.13);
+            col += hot*exp(-L/(A.z*0.18))*0.9*B.w;
+          } else if (type < 16.5){
+            // spiral: glowing arms; B.y dims them (mirage copies)
+            float arms = 1.0 - smoothstep(0.0, 0.3, abs(sin(n*0.5*ang - 2.5*log(L/A.z + 0.25) + uTime*0.6)));
+            col += hot*arms*inside*0.6*(0.25 + 0.75*B.y)*B.w;
+            col += hot*exp(-L/(A.z*0.14))*1.1*B.y*B.w;
+            amt = 0.0;
+          } else if (type < 17.5){
+            ln = abs(d + A.z*0.1);
+            tint = mix(vec3(1.0, 0.9, 0.6), vec3(1.0), B.z);
+          } else if (type < 18.5){
+            // triangle: a circle and a bar, like an old alchemy mark
+            ln = min(abs(L - A.z*0.3), max(abs(q.y + A.z*0.08), abs(q.x) - A.z*0.55));
+            tint = mix(vec3(1.0, 0.8, 0.3), vec3(1.0), B.z);
+          } else if (type > 19.5){
+            // flower: a second ring of petals turning the other way, and a gold heart
+            float pa = ang - uTime*0.4;
+            ln = abs(L - A.z*(0.3 + 0.16*pow(abs(cos(n*0.5*pa)), 0.7)));
+            tint = mix(vec3(1.0, 0.6, 0.85), vec3(1.0), B.z);
+            col += mix(vec3(1.0, 0.8, 0.3), vec3(1.0), B.z)*exp(-L/(A.z*0.14))*1.1*B.w;
+          } else {
+            // snowflake: a hexagon heart and a line down each arm
+            float sa = mod(ang + 3.14159/6.0, 3.14159/3.0) - 3.14159/6.0;
+            ln = min(abs(sdPoly(q, A.z*0.34, 6.0)), max(abs(L*sin(sa)), L - A.z*0.9));
+            tint = mix(vec3(0.5, 0.95, 1.0), vec3(1.0), B.z);
+          }
+          col += tint*(1.0 - smoothstep(0.9, 0.9 + aa*1.5, ln))*inside*amt*B.w;
+        } else if (type > 11.5){
+          // tear: pearly inner line and a soft glow low in the drop
+          vec3 pearl = mix(vec3(0.6, 0.85, 1.0), vec3(1.0), B.z);
+          col += pearl*(1.0 - smoothstep(0.9, 0.9 + aa*1.5, abs(d + A.z*0.16)))*0.9*B.w;
+          col += pearl*exp(-length(q - vec2(0.0, A.z*0.3))/(A.z*0.3))*0.7*B.w;
+        } else if (type > 10.5){
+          // sun: a gold disc inside the rays
+          vec3 gold = mix(vec3(1.0, 0.72, 0.3), vec3(1.0), B.z);
+          float L = length(q);
+          col += gold*(1.0 - smoothstep(1.0, 1.0 + aa*1.5, abs(L - A.z*0.55)))*0.9*B.w;
+          col += gold*(1.0 - smoothstep(0.8, 0.8 + aa*1.5, abs(L - A.z*0.3)))*0.6*B.w;
+          col += gold*exp(-L/(A.z*0.22))*0.9*B.w;
+        }
         continue;
       }
       float ang = atan(q.y, q.x);
@@ -271,11 +491,39 @@ h1{font-family:var(--display);font-weight:400;font-size:20px;margin:0;line-heigh
       col += pal(B.y + L*0.0012)*(line + glow)*B.z*B.z;
     }
 
-    for (int i = 0; i < 10; i++){
+    // in the blackout, shapes, enemies and ripples only show where the light falls; shots, the tear and the cab always show
+    float lm = lamp(p);
+    col *= lm; dark *= lm;
+
+    float bw = 1.1*uBig;
+    for (int i = 0; i < 24; i++){
       if (i >= uBN) break;
       vec4 b = uBo[i];
       float d = sdSeg(p, b.xy, b.xy - b.zw*30.0);
-      col += vec3(0.86, 0.78, 1.0)*((1.0 - smoothstep(1.1, 1.1 + aa*1.5, d)) + exp(-d/5.0)*0.6);
+      col += vec3(0.86, 0.78, 1.0)*((1.0 - smoothstep(bw, bw + aa*1.5, d)) + exp(-d/(5.0*uBig))*0.6);
+    }
+
+    // enemy orbs: hot pink with a white core
+    // a boss's sweeping beam: dim while it warns, hot when it's live
+    if (uBeamOn > 0.0){
+      vec2 q = unrot(uBeam.z)*(p - uBeam.xy);
+      float dl = abs(q.y), ax = abs(q.x);
+      float ends = smoothstep(uBeam.w, uBeam.w - 30.0, ax)*mix(1.0, smoothstep(44.0, 64.0, ax), uBeamGap);
+      float live = smoothstep(0.5, 1.0, uBeamOn);
+      col += vec3(1.0, 0.2, 0.5)*((1.0 - smoothstep(2.0, 2.0 + aa*1.5, dl))*(0.3 + 1.1*live) + exp(-dl/8.0)*0.6*live + exp(-dl/30.0)*0.15*live)*ends;
+      col += vec3(1.0)*(1.0 - smoothstep(0.7, 0.7 + aa*1.5, dl))*live*ends*0.8;
+    }
+
+    for (int i = 0; i < 64; i++){
+      if (i >= uON) break;
+      vec4 b = uOrb[i];
+      vec2 q = p - b.xy;
+      float L = length(q);
+      if (L > 90.0) continue;
+      float d = L - b.z;
+      float core = 1.0 - smoothstep(-aa, aa, d);
+      vec3 c = mix(vec3(1.0, 0.25, 0.55), vec3(1.0, 0.9, 0.95), smoothstep(b.z, b.z*0.2, L));
+      col += (c*core*1.3 + vec3(1.0, 0.2, 0.55)*(exp(-max(d, 0.0)/5.0)*0.7 + exp(-max(d, 0.0)/22.0)*0.22))*b.w;
     }
 
     // the tear: pearly, upright, gently swaying
@@ -310,6 +558,12 @@ h1{font-family:var(--display);font-weight:400;font-size:20px;margin:0;line-heigh
     cc = mix(cc, vec3(0.95, 0.9, 1.0), 1.0 - smoothstep(-aa, aa, sdBox(vec2(q.x - 12.4, abs(q.y) - 4.6), vec2(0.9, 1.4))));
     cc = mix(cc, vec3(1.0, 0.3, 0.55), 1.0 - smoothstep(-aa, aa, sdBox(vec2(q.x + 12.4, abs(q.y) - 4.6), vec2(0.9, 1.4))));
     col = mix(col, cc, (1.0 - smoothstep(-aa, aa, body))*uCarVis);
+
+    // shield: a slow hexagon ring around the cab
+    if (uShield > 0.0){
+      float ds = abs(sdPoly(unrot(uTime*0.8)*(p - uCar.xy), 23.0, 6.0));
+      col += vec3(0.6, 0.85, 1.0)*((1.0 - smoothstep(0.7, 0.7 + aa*1.5, ds))*0.85 + exp(-ds/5.0)*0.3)*uShield*uCarVis;
+    }
 
     o = vec4(col, dark);
   }`;
@@ -366,18 +620,61 @@ h1{font-family:var(--display);font-weight:400;font-size:20px;margin:0;line-heigh
   // Pass 4: composite to screen
   const FS_OUT = COMMON + `
   uniform sampler2D uFb; uniform sampler2D uScene; uniform sampler2D uBg;
-  uniform vec2 uRes; uniform float uTime, uTrip;
+  uniform vec2 uRes; uniform float uTime, uTrip, uInv, uDpr, uSea, uWarp, uGray, uSnow, uKal;
+  uniform vec3 uPaper, uLiq, uLiq2, uInk, uDet;
+  vec3 hueTurn(vec3 c, float a){ const vec3 k = vec3(0.57735); float ca = cos(a); return c*ca + cross(k, c)*sin(a) + k*dot(k, c)*(1.0 - ca); }
   out vec4 o;
   void main(){
     vec2 uv = gl_FragCoord.xy/uRes;
+    // Alchemy bends the screen itself
+    uv += uWarp*0.011*vec2(sin(uv.y*13.0 + uTime*1.6), cos(uv.x*11.0 - uTime*1.3));
     vec2 dir = uv - 0.5;
-    float ca = uTrip*0.006;
-    vec3 fb = vec3(texture(uFb, uv + dir*ca).r, texture(uFb, uv).g, texture(uFb, uv - dir*ca).b);
+    float ca = uTrip*0.006 + uWarp*0.004;
+    // Magnolia: everything behind the real scene folds into a slowly turning, breathing kaleidoscope.
+    // The real cab, shapes and shots stay exactly where they are, bright and sharp; the folded copies are dim ghosts
+    vec2 buv = uv;
+    if (uKal > 0.001){
+      vec2 kc = dir*vec2(uRes.x/uRes.y, 1.0);
+      float seg = TAU/8.0;
+      float ka = abs(mod(atan(kc.y, kc.x) + uTime*0.12, seg) - seg*0.5);
+      float kr = length(kc)*(1.0 + 0.1*sin(uTime*0.7));
+      vec2 kuv = vec2(cos(ka), sin(ka))*kr/vec2(uRes.x/uRes.y, 1.0) + 0.5;
+      buv = mix(uv, kuv, uKal);
+    }
+    vec3 fb = vec3(texture(uFb, buv + dir*ca).r, texture(uFb, buv).g, texture(uFb, buv - dir*ca).b);
     vec4 S = texture(uScene, uv);
-    vec3 col = (texture(uBg, uv).rgb + fb*0.8)*(1.0 - S.a) + S.rgb*0.4;
+    vec2 pp = vec2(gl_FragCoord.x, uRes.y - gl_FragCoord.y)/uDpr - 0.5*uRes/uDpr;
+    vec3 bgc = texture(uBg, buv).rgb*lamp(pp)*(1.0 + 1.6*uKal);
+    vec3 lit = fb*mix(0.8, 0.5, uKal)*(1.0 - S.a) + S.rgb*(0.4 + 0.8*S.a + 0.7*uKal);
+    vec3 col = bgc*(1.0 - S.a) + lit;
     col = 1.0 - exp(-col*1.35);
+    // Alchemy: the colours never stop turning
+    if (uWarp > 0.001) col = clamp(hueTurn(col, uWarp*(uTime*1.3 + length(dir)*7.0)), 0.0, 1.0);
+    // A Tear for Eddie: the world drains to black and white; only the tear keeps its colour
+    if (uGray > 0.001) col = mix(col, vec3(dot(col, vec3(0.3, 0.55, 0.15))), uGray*0.92*(1.0 - S.a));
+    // Albatross: everything washes to one calm sea colour
+    if (uSea > 0.001){
+      float lum = dot(col, vec3(0.3, 0.5, 0.2));
+      vec3 sea = mix(vec3(0.0, 0.05, 0.12), vec3(0.45, 1.0, 0.95), lum) + vec3(0.9, 0.95, 1.0)*smoothstep(0.75, 1.0, lum)*0.4;
+      col = mix(col, sea, uSea*0.85);
+    }
+    // the inverted world: white paper, blood-red liquid, everything that glows turns to black ink
+    if (uInv > 0.001){
+      float lb = max(max(bgc.r, bgc.g), bgc.b);
+      vec3 blood = mix(uLiq, uLiq2, smoothstep(0.14, 0.5, lb));
+      vec3 inv = mix(uPaper, blood, smoothstep(0.052, 0.1, lb));
+      // enemies are solid black with red details; shapes are only thin black outlines
+      float ls = max(max(lit.r, lit.g), lit.b);
+      float ink = smoothstep(0.16, 0.95, ls)*0.92;
+      inv = mix(inv, uInk, ink*(1.0 - S.a));
+      inv = mix(inv, uInk, smoothstep(0.25, 0.9, S.a));
+      inv = mix(inv, uDet, smoothstep(0.3, 1.0, ls)*smoothstep(0.5, 0.9, S.a));
+      // snow blowing across
+      inv = mix(inv, vec3(1.0), uSnow*0.85*step(0.988, hash(floor((pp + vec2(uTime*60.0, -uTime*110.0))/7.0))));
+      col = mix(col, inv, uInv);
+    }
     vec2 vv = dir*vec2(uRes.x/uRes.y, 1.0);
-    col *= 1.0 - 0.5*smoothstep(0.35, 1.1, length(vv));
+    col *= 1.0 - 0.5*(1.0 - 0.75*uInv)*smoothstep(0.35, 1.1, length(vv));
     col += (hash(gl_FragCoord.xy + fract(uTime)*97.0) - 0.5)/255.0;
     o = vec4(col, 1.0);
   }`;
@@ -433,33 +730,100 @@ h1{font-family:var(--display);font-weight:400;font-size:20px;margin:0;line-heigh
   const car = { x: 0, y: 0, a: -Math.PI / 2, v: 0 };
   const cam = { x: 0, y: 0 }, prevCam = { x: 0, y: 0 };
   let shapes = [], ripples = [], bolts = [];
-  let hue = 0.72, trip = 0, tripTarget = 0.55, fireCool = 0;
-  let tear = null, tearTimer = rand(14, 22);
+  let hue = 0.72, trip = 0, tripTarget = 0.55, fireCool = 0, travel = 0;
+  let tear = null, tearTimer = rand(18, 28);
   let points = 0, combo = 0, comboT = 0, tears = 0;
   const keys = new Set();
   let started = false;
 
   // game mode state; vibe mode never touches any of this
-  let mode = 'vibe', lives = 3, invuln = 0, deadT = 0, over = false, gT = 0, shadowCool = 0;
-  let shadows = [];
+  let mode = 'vibe', lives = 3, maxLives = 5, invuln = 0, deadT = 0, over = false, gT = 0;
+  let shadows = [], watchers = [], orbs = [], boss = null;
+  let shadowCool = 0, watcherCool = 0, nextBossAt = 25000, bossCount = 0;
+  let ups = new Set(), shieldT = 0, novaT = 12, armor = 2, tearShield = false;
+  // boss practice: pick one from the Bosses list and it comes straight at you
+  let practice = null, practiceT = 0, bossQueue = [], inv = 0, invClass = false, darkK = 0, seaK = 0, warpK = 0, grayK = 0, kalK = 0, nextUpAt = 6000, upGap = 9000, invTheme = 'brain', moveAng = -Math.PI / 2;
+  const wind = { x: 0, y: 0, t: 0 };
+  // upgrades switched on from the Upgrades list, for testing
+  const testUps = new Set();
   const BEST_KEY = { vibe: 'tfe-best', game: 'sr-best-game' };
   const bests = { vibe: 0, game: 0 };
   for (const m of ['vibe', 'game']) { try { bests[m] = parseInt(localStorage.getItem(BEST_KEY[m]) || '0', 10) || 0; } catch (_) {} }
   const livesEl = document.getElementById('lives');
   const livesRow = document.getElementById('livesRow');
+  const upsRow = document.getElementById('upsRow');
   const overEl = document.getElementById('over');
-  const modeBtns = [...document.querySelectorAll('.modes button')];
+  const bossBar = document.getElementById('bossBar');
+  const bossName = document.getElementById('bossName');
+  const bossFill = document.getElementById('bossFill');
+  const annEl = document.getElementById('ann');
+  const modeBtns = [...document.querySelectorAll('.modes button[data-mode]')];
+  const bossBtn = document.getElementById('bossBtn');
+  const bossList = document.getElementById('bossList');
+  let bossPicks = [];
+
+  // one upgrade per boss, picked at random from these
+  const UPGRADES = [
+    { id: 'twin',   name: 'Twin Bolts',     desc: 'Fire two bolts side by side' },
+    { id: 'rapid',  name: 'Rapid Fire',     desc: 'Shoot about half again as fast' },
+    { id: 'long',   name: 'Long Shot',      desc: 'Bolts fly faster and farther' },
+    { id: 'spread', name: 'Spread',         desc: 'Two extra bolts fan out to the sides' },
+    { id: 'pierce', name: 'Piercing Light', desc: 'Bolts punch through up to three things' },
+    { id: 'big',    name: 'Fat Bolts',      desc: 'Bigger bolts that are easier to land' },
+    { id: 'rear',   name: 'Rear Gun',       desc: 'Also fire a bolt out the back' },
+    { id: 'life',   name: 'Extra Heart',    desc: 'One more life now, and room for one more' },
+    { id: 'shield', name: 'Halo',           desc: 'A shield eats one hit, then recharges' },
+    { id: 'nitro',  name: 'Nitro',          desc: 'More top speed and quicker pickup' },
+    { id: 'steer',  name: 'Tight Steering', desc: 'Turn a lot sharper' },
+    { id: 'magnet', name: 'Tear Magnet',    desc: 'Tears come more often and drift to you' },
+    { id: 'combo',  name: 'Long Combo',     desc: 'Combos last longer and go up to ×12' },
+    { id: 'ghost',  name: 'Second Wind',    desc: 'Twice the safe time after a hit' },
+    { id: 'nova',   name: 'Nova',           desc: 'Every 12 seconds a blast clears the space around you' },
+  ];
+  const BOSSES = [
+    { kind: 'diamond', name: 'Shine On You Crazy Diamond', hint: 'Rings, spirals and fans of shots' },
+    { kind: 'brain',   name: 'Maggot Brain',        hint: 'Turns the world white and blood red' },
+    { kind: 'bird',    name: 'Albatross',           hint: 'The world turns to sea; slow waves roll in' },
+    { kind: 'bridge',  name: 'Bridge of Sighs',     hint: 'A sweeping beam you have to stay ahead of' },
+    { kind: 'moon',    name: 'Europa',              hint: 'Moons in orbit soak up your shots' },
+    { kind: 'twins',   name: 'Brothers in Arms',    hint: 'Two of them, one on each side of you' },
+    { kind: 'mirage',  name: 'Thinking of a Place', hint: 'Three copies, only one is real' },
+    { kind: 'sun',     name: 'Riviera Paradise',    hint: 'Slow rings with one gap to drive through' },
+    { kind: 'night',   name: 'Then Came the Last Days of May', hint: 'Blackout: you only see what your headlights hit' },
+    { kind: 'alchemy', name: 'Alchemy',              hint: 'Bends the screen and turns shapes into shadows' },
+    { kind: 'winter',  name: 'A Calf Born in Winter', hint: 'Whiteout: the road is ice and it hides in the snow' },
+    { kind: 'tear',    name: 'A Tear for Eddie',     hint: 'The world goes black and white; it weeps at you' },
+    { kind: 'flower',  name: 'Magnolia',             hint: 'Kaleidoscope: the whole world folds and blooms' },
+  ];
+  const BEAM_LEN = 300;
+  const has = id => mode === 'game' && ups.has(id);
+  const comboMax = () => has('combo') ? 12 : 9;
+  function bump() { combo = comboT > 0 ? Math.min(combo + 1, comboMax()) : 1; comboT = has('combo') ? 4 : 2.6; }
 
   function hud() {
     ptsEl.textContent = points.toLocaleString();
     comboEl.textContent = combo >= 2 ? '×' + combo : '';
     scoreEl.hidden = points === 0;
-    livesEl.textContent = '◆'.repeat(Math.max(0, lives));
+    // a full diamond is a fresh life; the hollow one has already taken a hit
+    livesEl.textContent = lives > 0 ? '◆'.repeat(lives - 1) + (armor > 1 ? '◆' : '◇') : '';
     livesRow.setAttribute('aria-label', lives + (lives === 1 ? ' life' : ' lives'));
-    if (points > bests[mode]) {
+    const names = UPGRADES.filter(u => ups.has(u.id)).map(u => u.name);
+    upsRow.hidden = mode !== 'game' || !names.length;
+    upsRow.textContent = names.join(' · ');
+    if (points > bests[mode] && !practice && !testUps.size) {
       bests[mode] = points;
       try { localStorage.setItem(BEST_KEY[mode], String(points)); } catch (_) {}
     }
+  }
+  function announce(kicker, title, sub, dur) {
+    document.getElementById('annKick').textContent = kicker;
+    document.getElementById('annTitle').textContent = title;
+    document.getElementById('annSub').textContent = sub;
+    annEl.hidden = false;
+    annEl.classList.remove('out');
+    clearTimeout(announce.t1); clearTimeout(announce.t2);
+    announce.t1 = setTimeout(() => annEl.classList.add('out'), dur * 1000);
+    announce.t2 = setTimeout(() => { annEl.hidden = true; }, dur * 1000 + 1200);
   }
 
   function resize() {
@@ -488,21 +852,47 @@ h1{font-family:var(--display);font-weight:400;font-size:20px;margin:0;line-heigh
     else if (type === 3) prm = rand(0.42, 0.6);
     return { x, y, size, type, n, prm, vx, vy, rot: rand(0, TAU), vr: rand(-0.35, 0.35), hue: Math.random(), age: 0 };
   }
+  // more shapes on bigger screens, and more as a game goes on
   function targetCount() {
-    const base = Math.round(clamp(W * H / 160000, 5, 9));
-    return mode === 'game' ? Math.min(14, base + Math.floor(gT / 25)) : base;
+    const base = Math.round(clamp(W * H / 125000, 6, 15));
+    let n = mode === 'game' ? base + Math.min(5, Math.floor(gT / 35)) : base;
+    if (boss || practice) n = Math.round(n * 0.45);
+    return n;
   }
-  function spawn(inView) {
-    const a = rand(0, TAU);
-    const d = inView ? rand(mode === 'game' ? 300 : 240, Math.max(320, Math.min(W, H) * 0.5 + 160)) : DIAG * 0.62 + rand(0, 320);
-    const x = cam.x + Math.cos(a) * d, y = cam.y + Math.sin(a) * d;
-    let va = rand(0, TAU), sp = rand(8, 26);
-    if (mode === 'game') {
-      // in game mode the field drifts at you, and faster the longer you last
-      va = Math.atan2(cam.y - y, cam.x - x) + rand(-0.6, 0.6);
-      sp = rand(25, 55) * Math.min(2.4, 1 + gT / 90);
+  // distance from the middle of the screen to its edge, in direction a
+  function edgeDist(a) {
+    const c = Math.abs(Math.cos(a)), s = Math.abs(Math.sin(a));
+    return Math.min(c > 1e-3 ? (W / 2) / c : 1e9, s > 1e-3 ? (H / 2) / s : 1e9);
+  }
+  // 'view' = somewhere on screen, 'edge' = just off screen, 'ahead' = off screen where you're heading
+  // breathing room between two shapes: roughly their widths plus a gap
+  const roomFor = (r1, r2) => (r1 + r2) * 0.9 + 55;
+  function spawn(where) {
+    const heading = car.a + (car.v < 0 ? Math.PI : 0);
+    const size = rand(44, 80);
+    // try a few spots and take the first one that isn't crowding another shape
+    for (let tries = 0; tries < 8; tries++) {
+      let a, d;
+      if (where === 'view') {
+        a = rand(0, TAU);
+        d = rand(mode === 'game' ? 360 : 200, Math.max(380, edgeDist(a) - 30));
+      } else {
+        const ahead = where === 'ahead' || (Math.abs(car.v) > 60 && Math.random() < 0.75);
+        a = ahead ? heading + rand(-1.05, 1.05) * (mode === 'game' ? 1.5 : 1) : rand(0, TAU);
+        d = edgeDist(a) + rand(70, 320);
+      }
+      const x = cam.x + Math.cos(a) * d, y = cam.y + Math.sin(a) * d;
+      if (shapes.some(s => !s.dead && Math.hypot(s.x - x, s.y - y) < roomFor(size, s.size))) continue;
+      let va = rand(0, TAU), sp = rand(8, 26);
+      if (mode === 'game') {
+        // in game mode about a third of the field drifts at you; the rest just wanders, a bit faster over time
+        if (Math.random() < 0.35) va = Math.atan2(cam.y - y, cam.x - x) + rand(-0.6, 0.6);
+        sp = rand(20, 45) * Math.min(2, 1 + gT / 120);
+      }
+      shapes.push(makeShape(x, y, size, Math.cos(va) * sp, Math.sin(va) * sp));
+      return true;
     }
-    shapes.push(makeShape(x, y, rand(44, 80), Math.cos(va) * sp, Math.sin(va) * sp));
+    return false;
   }
   function addRipple(x, y, r, rot, vr, type, n, prm, h, sp, delay) {
     ripples.push({ x, y, r, rot, vr, type, n, prm, hue: h, life: 1, sp, delay });
@@ -511,9 +901,8 @@ h1{font-family:var(--display);font-weight:400;font-size:20px;margin:0;line-heigh
 
   function breakShape(s, hx, hy) {
     const big = s.size > 55;
-    combo = comboT > 0 ? Math.min(combo + 1, 9) : 1;
-    comboT = 2.6;
-    points += (big ? 20 : 10) * combo;
+    bump();
+    points += (big ? 200 : 100) * combo;
     hud();
     const h = s.hue + hue;
     addRipple(s.x, s.y, s.size, s.rot, 0.35, s.type, s.n, s.prm, h, big ? 390 : 300, 0);
@@ -535,69 +924,569 @@ h1{font-family:var(--display);font-weight:400;font-size:20px;margin:0;line-heigh
 
   function spawnTear() {
     // appears just past the edge of the screen and drifts slowly across, so you stumble onto it
-    const a = rand(0, TAU), d = DIAG * rand(0.52, 0.6), va = a + Math.PI + rand(-0.5, 0.5);
+    const a = rand(0, TAU), d = edgeDist(a) + 40, va = a + Math.PI + rand(-0.5, 0.5);
     tear = { x: cam.x + Math.cos(a) * d, y: cam.y + Math.sin(a) * d, vx: Math.cos(va) * 26, vy: Math.sin(va) * 26, age: 0, life: 36, size: 22 };
   }
   function catchTear() {
     tears++;
-    points += 100 * Math.max(1, combo);
-    if (mode === 'game') lives = Math.min(5, lives + 1);
+    points += 1000 * Math.max(1, combo);
+    if (mode === 'game') {
+      // a tear is a life; if you're already full it mends a cracked one, or else leaves you a one-hit shield
+      if (lives < maxLives) lives++;
+      else if (armor < 2) armor = 2;
+      else { tearShield = true; points += 2000; }
+    }
     hud();
-    for (let i = 0; i < 4; i++) addRipple(tear.x, tear.y, 20 + i * 10, i * 0.4, i % 2 ? -0.4 : 0.4, i % 2 ? 2 : 0, i % 2 ? 6 : 6, 0.2, hue + i * 0.15, 280 + i * 60, i * 0.18);
+    for (let i = 0; i < 4; i++) addRipple(tear.x, tear.y, 20 + i * 10, i * 0.4, i % 2 ? -0.4 : 0.4, i % 2 ? 2 : 0, 6, 0.2, hue + i * 0.15, 280 + i * 60, i * 0.18);
     tripTarget = 1.25;
     hue += 0.25;
     lead(E3 * 4, 4.5, 2, 0.13); low(E3 / 2, 5, 0.1);
-    tear = null; tearTimer = rand(25, 40);
+    tear = null; tearTimer = has('magnet') ? rand(18, 28) : rand(32, 50);
   }
 
-  // ---------- game mode: shadows, lives, game over ----------
+  // ---------- game mode: enemies, lives, bosses, upgrades ----------
   function angDiff(a, b) { let d = b - a; while (d > Math.PI) d -= TAU; while (d < -Math.PI) d += TAU; return d; }
-  function spawnShadow() {
-    const a = rand(0, TAU), d = DIAG * 0.6;
-    shadows.push({ x: cam.x + Math.cos(a) * d, y: cam.y + Math.sin(a) * d, h: a + Math.PI, size: 26, rot: 0, age: 0 });
+  function offscreenPoint(extra) {
+    const a = rand(0, TAU), d = edgeDist(a) + extra;
+    return { a, x: cam.x + Math.cos(a) * d, y: cam.y + Math.sin(a) * d };
+  }
+  function spawnShadow(x, y, opt) {
+    let h;
+    if (x === undefined) { const p = offscreenPoint(60); x = p.x; y = p.y; h = p.a + Math.PI; }
+    else h = Math.atan2(car.y - y, car.x - x);
+    shadows.push(Object.assign({ x, y, h, size: 26, rot: rand(0, TAU), age: 0 }, opt));
   }
   function killShadow(s) {
     s.dead = true;
-    combo = comboT > 0 ? Math.min(combo + 1, 9) : 1;
-    comboT = 2.6;
-    points += 50 * combo;
+    bump();
+    points += (s.mag ? 150 : 500) * combo;
     hud();
-    addRipple(s.x, s.y, s.size, s.rot, 0.6, 1, 7, 2.4, 0.95, 380, 0);
-    addRipple(s.x, s.y, s.size * 0.5, -s.rot, -0.8, 1, 7, 2.4, 0.8, 250, 0.12);
-    tripTarget = Math.min(1, tripTarget + 0.55);
-    lead(E3 * Math.pow(2, 22 / 12), 2.6, 3, 0.13); low(E3 / 2, 2.8, 0.09);
+    addRipple(s.x, s.y, s.size, s.rot, 0.6, 1, 7, 2.4, 0.95, s.mag ? 260 : 380, 0);
+    if (!s.mag) addRipple(s.x, s.y, s.size * 0.5, -s.rot, -0.8, 1, 7, 2.4, 0.8, 250, 0.12);
+    tripTarget = Math.min(1, tripTarget + (s.mag ? 0.2 : 0.55));
+    if (s.mag) lead(E3 * Math.pow(2, 19 / 12), 0.9, 1, 0.07);
+    else { lead(E3 * Math.pow(2, 22 / 12), 2.6, 3, 0.13); low(E3 / 2, 2.8, 0.09); }
+  }
+  // watchers keep their distance, circle you, and spit orbs
+  function spawnWatcher() {
+    const p = offscreenPoint(80);
+    watchers.push({ x: p.x, y: p.y, size: 31, rot: p.a + Math.PI, orbit: Math.random() < 0.5 ? 1 : -1, hp: 3, flash: 0, fireT: rand(1.8, 2.6), age: 0 });
+  }
+  function hurtWatcher(w, dmg) {
+    w.hp -= dmg; w.flash = 1;
+    if (w.hp <= 0) killWatcher(w);
+    else lead(E3 * Math.pow(2, 17 / 12), 0.8, 1, 0.07);
+  }
+  function killWatcher(w) {
+    w.dead = true;
+    bump();
+    points += 1000 * combo;
+    hud();
+    addRipple(w.x, w.y, w.size, w.rot, 0.5, 4, 1, 0, 0.93, 400, 0);
+    addRipple(w.x, w.y, w.size * 0.6, -w.rot, -0.7, 1, 6, 2.2, 0.85, 280, 0.1);
+    tripTarget = Math.min(1, tripTarget + 0.6);
+    lead(E3 * Math.pow(2, 24 / 12), 2.8, 3, 0.13); low(E3 / 2, 3, 0.09);
+  }
+  function fireOrb(x, y, a, sp, opt) {
+    sp *= 0.92;
+    const o = Object.assign({ x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, r: 6.5, life: 6 }, opt);
+    orbs.push(o);
+    if (orbs.length > 64) orbs.shift();
+    return o;
+  }
+  function ringOf(x, y, n, sp, off, opt) { for (let i = 0; i < n; i++) fireOrb(x, y, off + i * TAU / n, sp, opt); }
+
+  // ---------- bosses ----------
+  function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = (Math.random() * (i + 1)) | 0; [a[i], a[j]] = [a[j], a[i]]; } return a; }
+  // the first boss of a run is always Shine On You Crazy Diamond; after that they come in a shuffled order
+  function nextKind() {
+    if (!bossQueue.length) {
+      const kinds = BOSSES.map(d => d.kind);
+      bossQueue = bossCount <= 1 ? ['diamond', ...shuffle(kinds.filter(k => k !== 'diamond'))] : shuffle(kinds);
+    }
+    return bossQueue.shift();
+  }
+  function body(x, y, size, code, role, extra) {
+    return Object.assign({ x, y, size, rot: rand(0, TAU), code, by: 1, alpha: 1, flash: 0, role }, extra);
+  }
+  function startBoss(kind) {
+    bossCount++;
+    const lvl = practice ? 1 : bossCount, L = lvl - 1;
+    kind = kind || nextKind();
+    const def = BOSSES.find(d => d.kind === kind);
+    const p = offscreenPoint(200);
+    const b = body(p.x, p.y, 88, 13 * 16 + 1, 'main', { kind, lvl, name: def.name, rot: 0, age: 0, atkT: 3.5, pat: 0, queue: [], orbit: Math.random() < 0.5 ? 1 : -1 });
+    b.bodies = [b];
+    let hp = 34;
+    if (kind === 'brain') { b.size = 84; b.code = 8 * 16 + 5; hp = 38; }
+    else if (kind === 'bird') { b.size = 92; b.code = 9 * 16 + 1; b.by = 0; hp = 30; b.atkT = 2.5; b.rot = p.a + Math.PI; b.tide = rand(0, TAU); }
+    else if (kind === 'alchemy') { b.size = 86; b.code = 18 * 16 + 3; hp = 32; }
+    else if (kind === 'winter') { b.size = 74; b.code = 19 * 16 + 6; hp = 30; b.spin = 0; b.atkT = 3; }
+    else if (kind === 'tear') { b.size = 70; b.code = 12 * 16 + 1; hp = 34; b.rot = 0; b.rest = 2.5; b.stream = 0; b.dropT = 0; b.drops = 0; }
+    else if (kind === 'flower') { b.size = 84; b.code = 20 * 16 + 7; hp = 34; b.phi = rand(0, TAU); b.curl = 1; b.rest = 0; b.stream = 3; b.dropT = 0; }
+    else if (kind === 'night') { b.size = 80; b.code = 17 * 16 + 1; hp = 30; b.flare = 0; b.atkT = 3; }
+    else if (kind === 'bridge') { b.size = 62; b.code = 14 * 16 + 1; b.beamA = rand(0, TAU); b.beamDir = b.orbit; b.flipT = rand(7, 10); b.tele = 0; }
+    else if (kind === 'moon') {
+      b.size = 76; b.code = 10 * 16 + 1; hp = 32;
+      for (let i = 0; i < 4; i++) b.bodies.push(body(b.x, b.y, 17, 10 * 16 + 2, 'sat', { ang: i * TAU / 4, hp: 3, down: 0 }));
+    } else if (kind === 'twins') {
+      hp = 40; b.theta = p.a; b.role = 'none'; b.alpha = 0;
+      b.bodies = [0, 1].map(side => body(p.x, p.y, 60, 15 * 16 + 1, 'twin', { side }));
+    } else if (kind === 'mirage') { b.size = 74; b.code = 16 * 16 + 3; hp = 28; b.phase = 'show'; b.tpT = 4; b.atkT = 3; }
+    else if (kind === 'sun') { b.size = 84; b.code = 11 * 16 + 12; hp = 36; b.gapA = null; }
+    b.maxHp = 2 * Math.round(hp * (1 + 0.3 * L) / 2);
+    b.hp = b.maxHp;
+    for (const o of b.bodies) if (o.role === 'twin') o.hp = b.maxHp / 2;
+    boss = b;
+    bossName.textContent = b.name;
+    bossFill.style.transform = 'scaleX(1)';
+    bossBar.hidden = false;
+    announce('Boss', b.name, 'is coming for you', 2.6);
+    low(E3 / 4, 4, 0.12); lead(E3, 3.5, -3, 0.1);
+    tripTarget = 1.1;
+  }
+  function bossDamage(dmg) {
+    const b = boss;
+    if (!b) return;
+    b.hp -= dmg;
+    points += 50 * dmg;
+    hud();
+    bossFill.style.transform = 'scaleX(' + Math.max(0, b.hp / b.maxHp) + ')';
+    if (b.kind === 'diamond' && !b.summoned && b.hp < b.maxHp / 2) {
+      b.summoned = true;
+      for (let i = 0; i < 2; i++) spawnShadow(b.x + rand(-40, 40), b.y + rand(-40, 40));
+    }
+    if (b.hp <= 0) defeatBoss();
+  }
+  // a bolt (or the nova) landed on one of the boss's bodies
+  function bossHit(o, dmg) {
+    const b = boss;
+    if (!b) return;
+    o.flash = 1;
+    if (o.role === 'main') bossDamage(dmg);
+    else if (o.role === 'twin') {
+      const d = Math.min(dmg, o.hp);
+      o.hp -= d;
+      if (o.hp <= 0) {
+        o.dead = true; b.enraged = true;
+        addRipple(o.x, o.y, o.size, o.rot, 0.6, 1, 5, 2.6, hue + 0.2, 380, 0);
+        tripTarget = Math.min(1.2, tripTarget + 0.7);
+        low(E3 / 2, 3, 0.1);
+      }
+      bossDamage(d);
+    } else if (o.role === 'sat') {
+      o.hp -= dmg;
+      if (o.hp <= 0) {
+        o.down = 6; o.alpha = 0;
+        addRipple(o.x, o.y, o.size, 0, 0.8, 0, 6, 0, 0.55, 240, 0);
+        points += 200; hud();
+        lead(E3 * Math.pow(2, 19 / 12), 1.2, 1, 0.08);
+      }
+    } else if (o.role === 'fake') {
+      // wrong one: it pops and throws a ring at you
+      o.dead = true;
+      addRipple(o.x, o.y, o.size, o.rot, 0.6, 1, 9, 2.6, 0.9, 320, 0);
+      ringOf(o.x, o.y, 8, 130, rand(0, TAU));
+      lead(E3 * Math.pow(2, 10 / 12), 1, -2, 0.08);
+    }
+  }
+  function defeatBoss() {
+    const b = boss;
+    boss = null;
+    bossBar.hidden = true;
+    orbs = [];
+    for (const s of shadows) if (s.mag || s.tmp) s.dead = true;
+    bump();
+    points += 10000;
+    for (let i = 0; i < 5; i++) addRipple(b.x, b.y, b.size * (0.4 + i * 0.25), b.rot + i * 0.3, i % 2 ? -0.6 : 0.6, i % 2 ? 0 : 1, i % 2 ? 6 : 8, 2.6, hue + i * 0.12, 300 + i * 80, i * 0.15);
+    tripTarget = 1.6; hue += 0.4;
+    lead(E3 * 4, 5, 2, 0.14); lead(E3 * 3, 5, 2, 0.1); low(E3 / 2, 5.5, 0.12);
+    if (practice) setTimeout(() => { if (practice && !over && !boss) announce('Boss down', b.name, 'Pick another from Bosses, or the same one again', 3.6); }, 700);
+    else { nextBossAt = Math.max(nextBossAt, points + 12000); setTimeout(grantUpgrade, 900); }
+    hud();
+  }
+  function grantUpgrade() {
+    if (mode !== 'game' || over || practice) return;
+    const left = UPGRADES.filter(u => !ups.has(u.id));
+    if (!left.length) {
+      lives = Math.min(maxLives, lives + 1); points += 5000; hud();
+      announce('Boss down', 'Nothing left to learn', 'Take a life and 5,000 points', 3.2);
+      return;
+    }
+    const u = pick(left);
+    ups.add(u.id);
+    if (u.id === 'life') { maxLives++; lives++; }
+    if (u.id === 'shield') shieldT = 0;
+    if (u.id === 'nova') novaT = 12;
+    hud();
+    announce('Upgrade', u.name, u.desc, 3.4);
+  }
+
+  // drift toward a set distance from the cab while circling it
+  function moveAround(o, want, sp, tang, orbit, dt) {
+    const dx = car.x - o.x, dy = car.y - o.y, dist = Math.hypot(dx, dy) || 1;
+    const rad = clamp((dist - want) / 140, -1, 1);
+    o.x += (dx / dist * rad * sp - dy / dist * orbit * sp * tang) * dt;
+    o.y += (dy / dist * rad * sp + dx / dist * orbit * sp * tang) * dt;
+    return dist;
+  }
+  function blip() { lead(E3 / 2 * Math.pow(2, pick([0, 3, 5]) / 12), 1.2, -2, 0.06); }
+
+  function updateBoss(dt, alive) {
+    const b = boss, L = b.lvl - 1;
+    b.age += dt;
+    for (const o of b.bodies) o.flash = Math.max(0, o.flash - dt * 5);
+    const toCar = Math.atan2(car.y - b.y, car.x - b.x);
+    const ready = alive && b.age > 2.5;
+
+    if (b.kind === 'diamond') {
+      // The Crazy Diamond: circles you, cycling a ring, a spiral and an aimed fan
+      b.rot = 0.18 * Math.sin(t * 0.9);
+      moveAround(b, 340, 70 + 8 * L, 0.5, b.orbit, dt);
+      if (ready && (b.atkT -= dt) <= 0) {
+        const pat = b.pat++ % 3;
+        if (pat === 0) ringOf(b.x, b.y, Math.min(20, 12 + 2 * L), 150, rand(0, TAU));
+        else if (pat === 1) { const off = rand(0, TAU); for (let v = 0; v < 4; v++) b.queue.push({ at: v * 0.22, off: off + v * 0.26 }); }
+        else for (let i = -2; i <= 2; i++) fireOrb(b.x, b.y, toCar + i * 0.13, 210);
+        blip();
+        b.atkT = Math.max(1.6, 2.8 - 0.25 * L);
+      }
+      for (const q of b.queue) {
+        q.at -= dt;
+        if (q.at <= 0 && !q.done) { q.done = true; ringOf(b.x, b.y, 6, 160, q.off); }
+      }
+      b.queue = b.queue.filter(q => !q.done);
+
+    } else if (b.kind === 'brain') {
+      // Maggot Brain: crawls straight at you, spits wriggling maggots and slow fat shots
+      b.rot += dt * 0.15;
+      moveAround(b, 150, 52 + 5 * L, 0.12, b.orbit, dt);
+      tripTarget = Math.max(tripTarget, 0.22);   // keeps the blood moving while it's alive
+      if (ready && (b.atkT -= dt) <= 0) {
+        if (b.pat++ % 2 === 0) {
+          const have = shadows.filter(s => s.mag && !s.dead).length;
+          for (let i = 0; i < 3 && have + i < 6; i++) {
+            const a = toCar + rand(-1, 1);
+            spawnShadow(b.x + Math.cos(a) * b.size * 0.7, b.y + Math.sin(a) * b.size * 0.7, { size: 14, sp: 150 + 8 * L, wig: rand(0, TAU), mag: true });
+          }
+        } else for (let i = -1; i <= 1; i++) fireOrb(b.x, b.y, toCar + i * 0.35, 125, { r: 10 });
+        blip();
+        b.atkT = Math.max(1.7, 2.6 - 0.2 * L);
+      }
+
+    } else if (b.kind === 'bird') {
+      // Albatross: calm sea. The bird never attacks; it just glides slow laps around you.
+      // The danger is the tide: long slow wave fronts roll across the whole screen, each with one gap to slip through
+      const px = b.x, py = b.y;
+      moveAround(b, 320, 85 + 6 * L, 1, b.orbit, dt);
+      b.rot += clamp(angDiff(b.rot, Math.atan2(b.y - py, b.x - px)), -3 * dt, 3 * dt);
+      b.by = 0.25 + 0.25 * Math.sin(t * 1.5);
+      if (ready && (b.atkT -= dt) <= 0) {
+        if (b.pat++ % 3 === 2) b.tide += pick([-1, 1]) * Math.PI / 2;     // the tide turns every third wave
+        const dx = Math.cos(b.tide), dy = Math.sin(b.tide);                // the way the wave travels
+        const gap = rand(-260, 260);
+        for (let i = -7; i <= 7; i++) {
+          const lat = i * 82;
+          if (Math.abs(lat - gap) < 125) continue;
+          const back = 640 + 26 * Math.sin(i * 0.7);
+          fireOrb(car.x - dx * back - dy * lat, car.y - dy * back + dx * lat, b.tide, 112, { life: 11, r: 6 });
+        }
+        low(E3 / 2, 3, 0.06);
+        b.atkT = Math.max(2.6, 3.4 - 0.2 * L);
+      }
+
+    } else if (b.kind === 'flower') {
+      // Magnolia: the world behind you becomes a kaleidoscope. The flower sits almost still and breathes out
+      // two slow arms of petals that curl as they go, then rests and curls them the other way
+      b.rot += dt * 0.15; hue += dt * 0.12;
+      tripTarget = Math.max(tripTarget, 0.55);
+      moveAround(b, 330, 40 + 4 * L, 0.3, b.orbit, dt);
+      if (ready) {
+        if (b.rest > 0) { if ((b.rest -= dt) <= 0) { b.stream = 3; b.curl *= -1; } }
+        else {
+          b.stream -= dt;
+          if ((b.dropT -= dt) <= 0) {
+            b.dropT = Math.max(0.26, 0.34 - 0.02 * L);
+            b.phi += 0.45 * b.curl;
+            for (let k = 0; k < 2; k++) fireOrb(b.x, b.y, b.phi + k * Math.PI, 118, { r: 7, life: 5.5, curl: 0.42 * b.curl });
+          }
+          if (b.stream <= 0) b.rest = 1.8;
+        }
+      }
+
+    } else if (b.kind === 'alchemy') {
+      // Alchemy: the screen bends and the colours spin. It turns the shapes around you into shadows,
+      // and throws a double ring, one fast and one slow
+      b.rot += dt * 0.25; hue += dt * 0.2;
+      moveAround(b, 320, 65 + 6 * L, 0.5, b.orbit, dt);
+      if (ready && (b.atkT -= dt) <= 0) {
+        let best = null, bd = 1e9;
+        if (b.pat++ % 2 === 0 && shadows.filter(s => s.tmp && !s.dead).length < 4) {
+          for (const s of shapes) {
+            const d = Math.hypot(s.x - car.x, s.y - car.y);
+            if (!s.dead && s.size > 40 && d > 170 && d < bd) { bd = d; best = s; }
+          }
+        }
+        if (best) {
+          best.dead = true;
+          addRipple(best.x, best.y, best.size, best.rot, 0.8, best.type, best.n, best.prm, 0.95, 300, 0);
+          spawnShadow(best.x, best.y, { tmp: true, size: 24 });
+        } else {
+          const off = rand(0, TAU);
+          ringOf(b.x, b.y, 12, 150, off); ringOf(b.x, b.y, 12, 95, off + TAU / 24);
+        }
+        blip();
+        b.atkT = Math.max(1.9, 2.8 - 0.2 * L);
+      }
+
+    } else if (b.kind === 'winter') {
+      // A Calf Born in Winter: whiteout. The road is ice, so the cab slides. It drifts in and out of the snow
+      // (you can only hit it while it's solid) and turns a slow six-armed snowflake of shots
+      b.rot += dt * 0.2;
+      moveAround(b, 300, 55 + 5 * L, 0.6, b.orbit, dt);
+      b.alpha = clamp(0.62 + 0.55 * Math.sin(b.age * 0.9), 0.12, 1);
+      if (ready && (b.atkT -= dt) <= 0) {
+        b.spin += 0.4;
+        ringOf(b.x, b.y, 6, 105, b.spin, { r: 7 });
+        b.atkT = Math.max(1.1, 1.5 - 0.08 * L);
+      }
+
+    } else if (b.kind === 'tear') {
+      // A Tear for Eddie: the world drains to black and white. It weeps a slow stream that sways like a bent note,
+      // rests, and weeps again. Each third of its health it lets go of a real tear for you
+      moveAround(b, 330, 50 + 5 * L, 0.35, b.orbit, dt);
+      b.rot = 0.12 * Math.sin(t * 1.2);
+      if (ready) {
+        if (b.rest > 0) { if ((b.rest -= dt) <= 0) { b.stream = 2.4; b.sw = rand(0, TAU); } }
+        else {
+          b.stream -= dt;
+          if ((b.dropT -= dt) <= 0) { b.dropT = 0.22; fireOrb(b.x, b.y, toCar + 0.6 * Math.sin(b.sw + b.stream * 2.2), 150, { r: 6 }); }
+          if (b.stream <= 0) b.rest = Math.max(1.3, 1.9 - 0.15 * L);
+        }
+      }
+      const stage = Math.floor((1 - b.hp / b.maxHp) * 3);
+      if (stage > b.drops && !tear) { b.drops = stage; tear = { x: b.x, y: b.y + b.size, vx: rand(-20, 20), vy: 30, age: 0, life: 22, size: 22 }; }
+
+    } else if (b.kind === 'night') {
+      // The Last Days of May: blackout. It prowls around you in the dark and flares up just before it fires
+      b.rot += dt * 0.5;
+      moveAround(b, 290, 62 + 6 * L, 0.7, b.orbit, dt);
+      b.flare = Math.max(b.flash * 0.8, b.flare - dt * 1.6);
+      if (ready) {
+        b.atkT -= dt;
+        if (b.atkT < 0.6) b.flare = Math.max(b.flare, 1 - b.atkT / 0.6);
+        if (b.atkT <= 0) {
+          if (b.pat++ % 3 === 2) ringOf(b.x, b.y, 10, 135, rand(0, TAU));
+          else for (let i = -1; i <= 1; i++) fireOrb(b.x, b.y, toCar + i * 0.18, 170);
+          blip();
+          if (Math.random() < 0.4) b.orbit *= -1;
+          b.atkT = Math.max(1.8, 2.7 - 0.2 * L);
+        }
+      }
+
+    } else if (b.kind === 'bridge') {
+      // Bridge of Sighs: stays close and sweeps a long beam; it flickers and stops before it reverses
+      b.rot += dt * 0.4;
+      moveAround(b, 230, 78 + 6 * L, 0.15, b.orbit, dt);
+      if (b.tele > 0) { b.tele -= dt; if (b.tele <= 0) b.beamDir *= -1; }
+      else {
+        b.beamA += b.beamDir * (0.42 + 0.04 * L) * dt;
+        if ((b.flipT -= dt) <= 0) { b.tele = 0.9; b.flipT = rand(6, 10); }
+      }
+      b.beamLive = b.age > 3 && b.tele <= 0;
+      if (alive && b.beamLive && invuln <= 0) {
+        const c = Math.cos(b.beamA), s = Math.sin(b.beamA), rx = car.x - b.x, ry = car.y - b.y;
+        const qx = rx * c + ry * s, qy = -rx * s + ry * c;
+        if (Math.abs(qy) < 9 && Math.abs(qx) > 52 && Math.abs(qx) < BEAM_LEN) hitCar();
+      }
+      if (ready && (b.atkT -= dt) <= 0) { ringOf(b.x, b.y, 10, 135, rand(0, TAU)); blip(); b.atkT = Math.max(2.4, 3.8 - 0.3 * L); }
+
+    } else if (b.kind === 'moon') {
+      // Europa: four moons orbit it and soak up your shots; it throws wide weaving shots
+      b.rot += dt * 0.1;
+      moveAround(b, 330, 70 + 6 * L, 0.5, b.orbit, dt);
+      for (const o of b.bodies) {
+        if (o.role !== 'sat') continue;
+        o.ang += dt * 1.1 * b.orbit;
+        o.x = b.x + Math.cos(o.ang) * 132; o.y = b.y + Math.sin(o.ang) * 132;
+        if (o.down > 0) { o.down -= dt; if (o.down <= 0) o.hp = 3; }
+        else o.alpha = Math.min(1, o.alpha + dt * 2);
+      }
+      if (ready && (b.atkT -= dt) <= 0) {
+        for (let i = -1; i <= 1; i++) {
+          const a = toCar + i * 0.32;
+          fireOrb(b.x, b.y, a, 140, { r: 9, wamp: 90, wph: rand(0, TAU), px: -Math.sin(a), py: Math.cos(a) });
+        }
+        blip();
+        b.atkT = Math.max(1.7, 2.5 - 0.2 * L);
+      }
+
+    } else if (b.kind === 'twins') {
+      // Brothers in Arms: two of them keep you between them and take turns; the last one standing gets angry
+      b.theta += dt * 0.35 * b.orbit;
+      const live = b.bodies;
+      for (const o of live) {
+        const th = b.theta + (o.side ? Math.PI : 0);
+        const dx = car.x + Math.cos(th) * 320 - o.x, dy = car.y + Math.sin(th) * 320 - o.y;
+        const d = Math.hypot(dx, dy) || 1, sp = Math.min(d * 2, 210);
+        o.x += dx / d * sp * dt; o.y += dy / d * sp * dt;
+        o.rot += dt * (o.side ? -0.7 : 0.7);
+      }
+      if (live.length) { b.x = live.reduce((s, o) => s + o.x, 0) / live.length; b.y = live.reduce((s, o) => s + o.y, 0) / live.length; }
+      if (ready && live.length && (b.atkT -= dt) <= 0) {
+        const o = live[b.pat++ % live.length], a = Math.atan2(car.y - o.y, car.x - o.x);
+        for (let i = -1; i <= 1; i++) fireOrb(o.x, o.y, a + i * 0.15, 200);
+        if (b.enraged && b.pat % 3 === 0) ringOf(o.x, o.y, 10, 140, rand(0, TAU));
+        blip();
+        b.atkT = b.enraged ? Math.max(0.9, 1.15 - 0.05 * L) : Math.max(1.1, 1.5 - 0.1 * L);
+      }
+
+    } else if (b.kind === 'mirage') {
+      // Thinking of a Place: fades out and comes back as three; only the one with the bright core is real
+      b.rot += dt * 0.6;
+      for (const o of b.bodies) if (o !== b) o.rot = b.rot + 1;
+      if (b.phase === 'show') {
+        moveAround(b, 300, 30, 0.3, b.orbit, dt);
+        if (alive && (b.tpT -= dt) <= 0) { b.phase = 'out'; b.phT = 0.45; }
+        if (ready && (b.atkT -= dt) <= 0) {
+          for (const o of b.bodies) fireOrb(o.x, o.y, Math.atan2(car.y - o.y, car.x - o.x), 185);
+          blip();
+          b.atkT = Math.max(1.5, 2.1 - 0.15 * L);
+        }
+      } else if (b.phase === 'out') {
+        b.phT -= dt;
+        for (const o of b.bodies) o.alpha = clamp(b.phT / 0.45, 0, 1);
+        if (b.phT <= 0) {
+          const base = rand(0, TAU), slots = shuffle([0, 1, 2]);
+          const at = k => ({ x: car.x + Math.cos(base + k * TAU / 3) * 300, y: car.y + Math.sin(base + k * TAU / 3) * 300 });
+          Object.assign(b, at(slots[0]));
+          b.bodies = [b, 1, 2].map((v, i) => i === 0 ? b : body(at(slots[i]).x, at(slots[i]).y, b.size, b.code, 'fake', { by: 0.3, alpha: 0 }));
+          b.phase = 'in'; b.phT = 0.5;
+        }
+      } else {
+        b.phT -= dt;
+        for (const o of b.bodies) o.alpha = clamp(1 - b.phT / 0.5, 0, 1);
+        if (b.phT <= 0) { b.phase = 'show'; b.tpT = Math.max(3.6, 5 - 0.3 * L); b.atkT = 1.2; }
+      }
+
+    } else if (b.kind === 'sun') {
+      // Riviera Paradise: barely moves; sends out slow rings with one gap, and the gap walks around
+      b.rot += dt * 0.12;
+      moveAround(b, 360, 45, 0.2, b.orbit, dt);
+      if (ready && (b.atkT -= dt) <= 0) {
+        b.gapA = b.gapA == null ? toCar : b.gapA + pick([-1, 1]) * rand(0.5, 0.9);
+        const N = Math.min(24, 18 + 2 * L);
+        for (let i = 2; i < N - 1; i++) fireOrb(b.x, b.y, b.gapA + i * TAU / N, 112, { life: 5.6 });
+        if (b.pat++ % 3 === 2) for (let i = -1; i <= 1; i++) fireOrb(b.x, b.y, toCar + i * 0.16, 190);
+        blip();
+        b.atkT = Math.max(1.7, 2.3 - 0.12 * L);
+      }
+    }
+
+    b.bodies = b.bodies.filter(o => !o.dead);
+    if (alive && invuln <= 0) {
+      for (const o of b.bodies) {
+        if (o.role === 'none' || o.alpha < 0.6) continue;
+        if (Math.hypot(o.x - car.x, o.y - car.y) < o.size * 0.75 + 9) { hitCar(); break; }
+      }
+    }
+  }
+
+  function hitCar() {
+    if (deadT > 0 || over || invuln > 0) return;
+    if (has('shield') && shieldT <= 0) {
+      shieldT = 18; invuln = 1.2;
+      addRipple(car.x, car.y, 24, t, 0.8, 0, 6, 0, 0.55, 360, 0);
+      tripTarget = Math.min(1, tripTarget + 0.5);
+      lead(E3 * 3, 1.6, 1, 0.1);
+      return;
+    }
+    if (tearShield) {
+      tearShield = false; invuln = 1.2;
+      addRipple(car.x, car.y, 24, t, 0.8, 0, 6, 0, 0.55, 360, 0);
+      lead(E3 * 3, 1.6, 1, 0.1);
+      return;
+    }
+    // first hit on a life only cracks it
+    if (armor > 1) {
+      armor--; invuln = 1.6; combo = 0; comboT = 0;
+      addRipple(car.x, car.y, 16, t, 0.9, 1, 5, 2.3, hue + 0.1, 320, 0);
+      tripTarget = Math.min(1.1, tripTarget + 0.6);
+      lead(E3 * 1.5, 1.6, -2, 0.1);
+      hud();
+      return;
+    }
+    loseLife();
   }
   function loseLife() {
     if (deadT > 0 || over) return;
     lives--;
     deadT = 1.4; invuln = 0; car.v = 0;
     combo = 0; comboT = 0;
+    orbs = [];
     for (let i = 0; i < 4; i++) addRipple(car.x, car.y, 12 + i * 8, i * 0.5, i % 2 ? -0.7 : 0.7, 1, 5 + i, 2.3, hue + i * 0.12, 300 + i * 70, i * 0.1);
     tripTarget = 1.3; hue += 0.2;
     lead(E3 * 1.5, 3, -3, 0.12); low(E3 / 2, 3.2, 0.1);
     hud();
     if (lives <= 0) {
       over = true;
+      bossBar.hidden = true;
       document.getElementById('overPts').textContent = points.toLocaleString();
       document.getElementById('overBest').textContent = bests.game.toLocaleString();
       setTimeout(() => { if (over) overEl.hidden = false; }, 900);
     }
   }
+  function nova() {
+    const R = 240;
+    addRipple(car.x, car.y, 20, t, 0.9, 0, 6, 0, hue + 0.1, 560, 0);
+    addRipple(car.x, car.y, 14, -t, -0.9, 1, 8, 3, hue + 0.45, 440, 0.08);
+    for (const s of shapes.slice()) if (!s.dead && Math.hypot(s.x - car.x, s.y - car.y) < R + s.size * 0.5) { s.dead = true; breakShape(s, s.x - car.x, s.y - car.y); }
+    for (const s of shadows) if (!s.dead && Math.hypot(s.x - car.x, s.y - car.y) < R) killShadow(s);
+    for (const w of watchers) if (!w.dead && Math.hypot(w.x - car.x, w.y - car.y) < R) killWatcher(w);
+    orbs = orbs.filter(o => Math.hypot(o.x - car.x, o.y - car.y) > R);
+    if (boss) for (const o of boss.bodies.slice()) {
+      if (!boss) break;
+      if (!o.dead && o.role !== 'none' && o.alpha > 0.6 && Math.hypot(o.x - car.x, o.y - car.y) < R + o.size) bossHit(o, 3);
+    }
+    tripTarget = Math.min(1.2, tripTarget + 0.6);
+  }
+
+  function fire() {
+    const sp = (has('long') ? 980 : 760) + Math.max(0, car.v);
+    const life = has('long') ? 1.25 : 0.85;
+    const add = (a, off) => {
+      const c = Math.cos(a), s = Math.sin(a);
+      bolts.push({ x: car.x + c * 16 - s * off, y: car.y + s * 16 + c * off, dx: c, dy: s, sp, life, hits: has('pierce') ? 3 : 1, seen: [] });
+    };
+    if (has('twin')) { add(car.a, -5); add(car.a, 5); } else add(car.a, 0);
+    if (has('spread')) { add(car.a - 0.22, 0); add(car.a + 0.22, 0); }
+    if (has('rear')) add(car.a + Math.PI, 0);
+    while (bolts.length > 24) bolts.shift();
+    fireCool = has('rapid') ? 0.13 : 0.2;
+  }
+
   function resetWorld() {
-    shapes = []; ripples = []; bolts = []; shadows = [];
-    tear = null; tearTimer = rand(14, 22);
+    shapes = []; ripples = []; bolts = []; shadows = []; watchers = []; orbs = []; boss = null;
+    tear = null; tearTimer = rand(18, 28);
     points = 0; combo = 0; comboT = 0; tears = 0;
-    lives = 3; invuln = mode === 'game' ? 2 : 0; deadT = 0; over = false; gT = 0; shadowCool = 0;
+    lives = 3; maxLives = 5; invuln = mode === 'game' ? 2 : 0; deadT = 0; over = false; gT = 0;
+    shadowCool = 0; watcherCool = 0; nextBossAt = 25000; bossCount = 0;
+    bossQueue = []; practiceT = practice ? 1.2 : 0; nextUpAt = 6000; upGap = 9000;
+    ups = new Set(mode === 'game' ? testUps : []); shieldT = 0; novaT = 12; armor = 2; tearShield = false;
+    if (ups.has('life')) { maxLives = 6; lives = 4; }
+    wind.t = 0;
     car.v = 0;
-    overEl.hidden = true;
-    for (let i = 0; i < targetCount(); i++) spawn(true);
+    overEl.hidden = true; bossBar.hidden = true; annEl.hidden = true;
+    for (let i = 0, made = 0; made < targetCount() && i < targetCount() * 3; i++) if (spawn('view')) made++;
     for (const s of shapes) s.age = 1;
     tripTarget = Math.max(tripTarget, 0.6);
     hud();
   }
   function setMode(m) {
-    if (m === mode && !over) return;
-    mode = m;
+    if (m === mode && !over && !practice) return;
+    mode = m; practice = null;
+    markTest();
+    bossPicks.forEach(p => p.removeAttribute('aria-current'));
     modeBtns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode === m)));
     livesRow.hidden = m !== 'game';
     resetWorld();
@@ -605,6 +1494,81 @@ h1{font-family:var(--display);font-weight:400;font-size:20px;margin:0;line-heigh
   modeBtns.forEach(b => b.addEventListener('click', () => { setMode(b.dataset.mode); b.blur(); }));
   document.getElementById('again').addEventListener('click', e => { resetWorld(); e.currentTarget.blur(); });
   document.getElementById('toVibe').addEventListener('click', e => { setMode('vibe'); e.currentTarget.blur(); });
+
+  // the Bosses list: pick one to fight it right away
+  // Testing panel: one button, two tabs (Bosses, Upgrades)
+  const testBtn = document.getElementById('testBtn'), testPanel = document.getElementById('testPanel');
+  let testTab = 'boss';
+  function showTest(tab) {
+    if (tab) testTab = tab;
+    testPanel.hidden = !tab;
+    bossList.hidden = tab !== 'boss';
+    document.getElementById('upList').hidden = tab !== 'up';
+    testBtn.setAttribute('aria-expanded', String(!!tab));
+    bossBtn.setAttribute('aria-pressed', String(testTab === 'boss'));
+    document.getElementById('upBtn').setAttribute('aria-pressed', String(testTab === 'up'));
+    document.body.classList.toggle('pick-open', !!tab);
+  }
+  function markTest() { testBtn.classList.toggle('on', !!practice || testUps.size > 0); }
+  function showBossList(open) { showTest(open ? 'boss' : null); }
+  testBtn.addEventListener('click', () => { showTest(testPanel.hidden ? testTab : null); testBtn.blur(); });
+  document.getElementById('testClose').addEventListener('click', () => showTest(null));
+  function pickBoss(kind) {
+    practice = kind; mode = 'game';
+    modeBtns.forEach(b => b.setAttribute('aria-pressed', 'false'));
+    markTest();
+    bossPicks.forEach(p => p.setAttribute('aria-current', String(p.dataset.kind === kind)));
+    livesRow.hidden = false;
+    showBossList(false);
+    resetWorld();
+    cv.focus();
+  }
+  bossPicks = BOSSES.map(d => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.dataset.kind = d.kind;
+    b.textContent = d.name;
+    const sm = document.createElement('small'); sm.textContent = d.hint;
+    b.appendChild(sm);
+    b.addEventListener('click', () => pickBoss(d.kind));
+    bossList.appendChild(b);
+    return b;
+  });
+  bossBtn.addEventListener('click', () => { showTest('boss'); bossBtn.blur(); });
+
+  // the Upgrades list: switch any upgrade on or off to try it out
+  const upBtn = document.getElementById('upBtn'), upList = document.getElementById('upList');
+  function showUpList(open) { showTest(open ? 'up' : null); }
+  function syncUps() {
+    upPicks.forEach(p => p.setAttribute('aria-pressed', String(testUps.has(p.dataset.id))));
+    markTest();
+    upBtn.textContent = testUps.size ? 'Upgrades ' + testUps.size : 'Upgrades';
+  }
+  function toggleUp(id) {
+    const on = !testUps.has(id);
+    on ? testUps.add(id) : testUps.delete(id);
+    if (mode === 'game') {
+      on ? ups.add(id) : ups.delete(id);
+      if (id === 'life') { maxLives += on ? 1 : -1; lives = clamp(lives + (on ? 1 : 0), 1, maxLives); }
+      if (id === 'shield') shieldT = 0;
+      if (id === 'nova') novaT = 4;
+      hud();
+    }
+    syncUps();
+  }
+  const upPicks = UPGRADES.map(u => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.dataset.id = u.id; b.setAttribute('aria-pressed', 'false');
+    b.textContent = u.name;
+    const sm = document.createElement('small'); sm.textContent = u.desc;
+    b.appendChild(sm);
+    b.addEventListener('click', () => { toggleUp(u.id); b.blur(); });
+    upList.appendChild(b);
+    return b;
+  });
+  document.getElementById('upClear').addEventListener('click', e => { [...testUps].forEach(toggleUp); e.currentTarget.blur(); });
+  upBtn.addEventListener('click', () => { showTest('up'); upBtn.blur(); });
+
+  window.addEventListener('keydown', e => { if (e.key === 'Escape' && !testPanel.hidden) showTest(null); });
 
   // ================= sound: a sustained, bent lead in E minor pentatonic =================
   let ac = null, master = null, bus = null, soundOn = false, noteIdx = 5;
@@ -796,76 +1760,175 @@ h1{font-family:var(--display);font-weight:400;font-size:20px;margin:0;line-heigh
     const game = mode === 'game';
     if (game && !over) gT += dt;
     if (invuln > 0) invuln -= dt;
-    if (deadT > 0) { deadT -= dt; if (deadT <= 0 && !over) invuln = 2.5; }
+    if (deadT > 0) { deadT -= dt; if (deadT <= 0 && !over) { invuln = has('ghost') ? 5 : 2.5; armor = 2; hud(); } }
+    if (shieldT > 0) shieldT -= dt;
     const alive = deadT <= 0 && !over;
 
     const kU = keys.has('arrowup') || keys.has('w'), kD = keys.has('arrowdown') || keys.has('s');
     const kL = keys.has('arrowleft') || keys.has('a'), kR = keys.has('arrowright') || keys.has('d');
     const thr = !alive ? 0 : kU ? 1 : kD ? -0.6 : 0, st = !alive ? 0 : (kR ? 1 : 0) - (kL ? 1 : 0);
-    if (alive && keys.has(' ') && fireCool <= 0) {
-      const c = Math.cos(car.a), s = Math.sin(car.a);
-      bolts.push({ x: car.x + c * 16, y: car.y + s * 16, dx: c, dy: s, sp: 760 + Math.max(0, car.v), life: 0.85 });
-      if (bolts.length > 10) bolts.shift();
-      fireCool = 0.2;
-    }
+    if (alive && keys.has(' ') && fireCool <= 0) fire();
 
-    car.v += thr * (thr > 0 ? 520 : 420) * dt;
-    car.v *= Math.pow(thr ? 0.42 : 0.12, dt);
+    const nitro = has('nitro');
+    car.v += thr * (thr > 0 ? (nitro ? 660 : 520) : 420) * dt;
+    const icy = !!boss && boss.kind === 'winter' && boss.age > 0.8 && !over;
+    car.v *= Math.pow(thr ? 0.42 : icy ? 0.5 : 0.12, dt);
     if (!thr && Math.abs(car.v) < 4) car.v = 0;
-    car.v = clamp(car.v, -160, 400);
+    car.v = clamp(car.v, -160, nitro ? 500 : 400);
     // turns even when sitting still, so you can spin in place to aim; a touch sharper once rolling
-    const turn = mix(3.4, 4.5, clamp(Math.abs(car.v) / 120, 0, 1));
+    const turn = mix(3.4, 4.5, clamp(Math.abs(car.v) / 120, 0, 1)) * (has('steer') ? 1.3 : 1);
     car.a += st * turn * (car.v < -5 ? -1 : 1) * dt;
-    const cvx = Math.cos(car.a) * car.v, cvy = Math.sin(car.a) * car.v;
+    // on ice the cab keeps sliding the way it was going while the nose comes around
+    if (icy) moveAng += clamp(angDiff(moveAng, car.a), -1.7 * dt, 1.7 * dt); else moveAng = car.a;
+    const cvx = Math.cos(moveAng) * car.v, cvy = Math.sin(moveAng) * car.v;
     car.x += cvx * dt; car.y += cvy * dt;
+    if (wind.t > 0) {
+      wind.t -= dt;
+      const k = Math.max(0, wind.t / 0.9);
+      if (alive) { car.x += wind.x * k * dt; car.y += wind.y * k * dt; }
+      for (const o of orbs) { o.x += wind.x * 0.25 * k * dt; o.y += wind.y * 0.25 * k * dt; }
+    }
 
     prevCam.x = cam.x; prevCam.y = cam.y;
     const k = 1 - Math.pow(0.04, dt);
     cam.x += (car.x + cvx * 0.3 - cam.x) * k;
     cam.y += (car.y + cvy * 0.3 - cam.y) * k;
 
+    // shapes
     for (const s of shapes) {
       s.age += dt; s.x += s.vx * dt; s.y += s.vy * dt; s.rot += s.vr * dt;
-      if (alive && s.age > 0.5 && Math.hypot(s.x - car.x, s.y - car.y) < s.size * 0.75 + 10) {
+      if (alive && !s.dead && s.age > 0.5 && Math.hypot(s.x - car.x, s.y - car.y) < s.size * 0.75 + 10) {
         s.dead = true; breakShape(s, cvx || Math.cos(car.a), cvy || Math.sin(car.a));
-        if (game && invuln <= 0) loseLife();
+        if (game) hitCar();
       }
     }
+    // shapes that drift into each other ease apart over a second or two (fresh pieces from a break are left alone)
+    for (let i = 0; i < shapes.length; i++) {
+      const a = shapes[i];
+      if (a.dead || a.age < 1.2) continue;
+      for (let j = i + 1; j < shapes.length; j++) {
+        const b = shapes[j];
+        if (b.dead || b.age < 1.2) continue;
+        const dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy) || 0.01;
+        const min = (a.size + b.size) * 0.85 + 20;
+        if (d >= min) continue;
+        const m = (min - d) * 0.7 * dt / d;
+        a.x -= dx * m; a.y -= dy * m;
+        b.x += dx * m; b.y += dy * m;
+      }
+    }
+
+    // bolts
+    const R = has('big') ? 1.45 : 1;
     for (const b of bolts) {
       b.x += b.dx * b.sp * dt; b.y += b.dy * b.sp * dt; b.life -= dt;
-      for (const s of shadows) {
-        if (!s.dead && b.life > 0 && Math.hypot(s.x - b.x, s.y - b.y) < s.size * 0.95) { b.life = 0; killShadow(s); }
+      if (b.life <= 0) continue;
+      const spend = o => { b.seen.push(o); if (--b.hits <= 0) b.life = 0; };
+      const near = (o, r) => b.seen.indexOf(o) < 0 && Math.hypot(o.x - b.x, o.y - b.y) < r * R;
+      if (boss) {
+        let struck = false;
+        for (const o of boss.bodies) {
+          if (o.dead || o.role === 'none' || o.alpha < 0.6) continue;
+          if (near(o, o.size * (o.role === 'sat' ? 1.15 : 0.85))) { bossHit(o, 1); struck = true; break; }
+        }
+        if (struck) { b.life = 0; continue; }
       }
+      for (const s of shadows) if (b.life > 0 && !s.dead && near(s, s.size * 0.95)) { killShadow(s); spend(s); }
+      for (const w of watchers) if (b.life > 0 && !w.dead && near(w, w.size * 1.05)) { hurtWatcher(w, 1); spend(w); }
       if (b.life <= 0) continue;
       for (const s of shapes) {
-        if (!s.dead && s.age > 0.25 && Math.hypot(s.x - b.x, s.y - b.y) < s.size * 0.85) { s.dead = true; b.life = 0; breakShape(s, b.dx, b.dy); break; }
+        if (b.life > 0 && !s.dead && s.age > 0.25 && near(s, s.size * 0.85)) { s.dead = true; breakShape(s, b.dx, b.dy); spend(s); }
       }
-    }
-
-    // shadows hunt you in game mode, a little faster the longer you last
-    if (game) {
-      const want = over || gT < 15 ? 0 : Math.min(5, 1 + Math.floor((gT - 15) / 35));
-      shadowCool -= dt;
-      if (shadows.length < want && shadowCool <= 0) { spawnShadow(); shadowCool = 4; }
-      const sp = Math.min(175, 70 + gT * 0.5);
-      for (const s of shadows) {
-        s.age += dt; s.rot += dt * 1.4;
-        const target = alive ? Math.atan2(car.y - s.y, car.x - s.x) : s.h + Math.sin(t + s.rot) * 0.5;
-        s.h += clamp(angDiff(s.h, target), -1.3 * dt, 1.3 * dt);
-        s.x += Math.cos(s.h) * sp * dt; s.y += Math.sin(s.h) * sp * dt;
-        if (alive && invuln <= 0 && s.age > 0.8 && Math.hypot(s.x - car.x, s.y - car.y) < s.size * 0.7 + 9) { s.dead = true; loseLife(); }
-      }
-      shadows = shadows.filter(s => !s.dead && Math.hypot(s.x - cam.x, s.y - cam.y) < DIAG * 1.6);
     }
     bolts = bolts.filter(b => b.life > 0);
+
+    if (game) {
+      // shadows hunt you, a little faster the longer you last
+      shadowCool -= dt;
+      const wantS = over || boss || practice || gT < 15 ? 0 : Math.min(5, 1 + Math.floor((gT - 15) / 35));
+      if (shadows.length < wantS && shadowCool <= 0) { spawnShadow(); shadowCool = 4; }
+      const ssp = Math.min(175, 70 + gT * 0.5);
+      for (const s of shadows) {
+        s.age += dt; s.rot += dt * 1.4;
+        let target = alive ? Math.atan2(car.y - s.y, car.x - s.x) : s.h + Math.sin(t + s.rot) * 0.5;
+        if (s.mag) target += Math.sin(t * 9 + s.wig) * 0.9;
+        const turnS = s.mag ? 2.6 : 1.3, sp = s.sp || ssp;
+        s.h += clamp(angDiff(s.h, target), -turnS * dt, turnS * dt);
+        s.x += Math.cos(s.h) * sp * dt; s.y += Math.sin(s.h) * sp * dt;
+        if (alive && !s.dead && s.age > 0.8 && invuln <= 0 && Math.hypot(s.x - car.x, s.y - car.y) < s.size * 0.7 + 9) { s.dead = true; hitCar(); }
+      }
+      shadows = shadows.filter(s => !s.dead && Math.hypot(s.x - cam.x, s.y - cam.y) < DIAG * 1.6);
+
+      // watchers show up after 45 seconds
+      watcherCool -= dt;
+      const wantW = over || boss || practice || gT < 45 ? 0 : Math.min(3, 1 + Math.floor((gT - 45) / 60));
+      if (watchers.length < wantW && watcherCool <= 0) { spawnWatcher(); watcherCool = 7; }
+      for (const w of watchers) {
+        w.age += dt; w.flash = Math.max(0, w.flash - dt * 4);
+        const dx = car.x - w.x, dy = car.y - w.y, dist = Math.hypot(dx, dy) || 1;
+        const rad = clamp((dist - 300) / 120, -1, 1), sp = 95;
+        w.x += (dx / dist * rad * sp - dy / dist * w.orbit * sp * 0.55) * dt;
+        w.y += (dy / dist * rad * sp + dx / dist * w.orbit * sp * 0.55) * dt;
+        w.rot = Math.atan2(dy, dx);
+        if (alive && dist < DIAG * 0.55) {
+          w.fireT -= dt;
+          if (w.fireT <= 0) { fireOrb(w.x + dx / dist * 20, w.y + dy / dist * 20, w.rot, 200); w.fireT = rand(2.6, 3.4); }
+        }
+        if (alive && !w.dead && invuln <= 0 && dist < w.size * 0.8 + 9) { killWatcher(w); hitCar(); }
+      }
+      watchers = watchers.filter(w => !w.dead && Math.hypot(w.x - cam.x, w.y - cam.y) < DIAG * 1.8);
+
+      // a boss every 25,000 points, or right away when you picked one from the Bosses list
+      if (practice && !boss && !over && practiceT > 0 && (practiceT -= dt) <= 0) startBoss(practice);
+      if (!practice && !boss && !over && points >= nextBossAt) { nextBossAt += 25000; startBoss(); }
+      // upgrades also come from score: the first at 6,000, then each one takes about a third more than the last
+      if (!practice && !boss && alive && points >= nextUpAt) { upGap = Math.round(upGap * 1.35); nextUpAt = points + upGap; grantUpgrade(); }
+      if (boss) updateBoss(dt, alive);
+
+      // orbs
+      for (const o of orbs) {
+        let vx = o.vx, vy = o.vy;
+        if (o.curl) { const c = Math.cos(o.curl * dt), sn = Math.sin(o.curl * dt), ox = o.vx; o.vx = ox * c - o.vy * sn; o.vy = ox * sn + o.vy * c; vx = o.vx; vy = o.vy; }
+        if (o.wamp) { const k = Math.cos(o.life * 4 + o.wph) * o.wamp; vx += o.px * k; vy += o.py * k; }
+        o.x += vx * dt; o.y += vy * dt; o.life -= dt;
+        if (alive && invuln <= 0 && Math.hypot(o.x - car.x, o.y - car.y) < o.r + 8) { o.life = 0; hitCar(); }
+      }
+      orbs = orbs.filter(o => o.life > 0);
+
+      if (has('nova') && alive) { novaT -= dt; if (novaT <= 0) { nova(); novaT = 12; } }
+    }
+
+    // Maggot Brain flips the world to white, red and black while it's alive
+    const bk = boss && !over && boss.age > 0.8 ? boss.kind : '';
+    if (bk === 'brain' || bk === 'winter') invTheme = bk;
+    inv += ((bk === 'brain' || bk === 'winter' ? 1 : 0) - inv) * (1 - Math.pow(0.04, dt));
+    warpK += ((bk === 'alchemy' ? 1 : 0) - warpK) * (1 - Math.pow(0.08, dt));
+    grayK += ((bk === 'tear' ? 1 : 0) - grayK) * (1 - Math.pow(0.08, dt));
+    kalK += ((bk === 'flower' ? 1 : 0) - kalK) * (1 - Math.pow(0.1, dt));
+    seaK += ((boss && boss.kind === 'bird' && !over && boss.age > 0.8 ? 1 : 0) - seaK) * (1 - Math.pow(0.08, dt));
+    darkK += ((boss && boss.kind === 'night' && !over && boss.age > 0.8 ? 1 : 0) - darkK) * (1 - Math.pow(0.08, dt));
+    if ((inv > 0.5) !== invClass) {
+      invClass = inv > 0.5;
+      document.body.classList.toggle('inv', invClass);
+      document.body.classList.toggle('ice', invClass && invTheme === 'winter');
+    }
+
+    // keep the space full, and fill in ahead of you as you travel
     shapes = shapes.filter(s => !s.dead && Math.hypot(s.x - cam.x, s.y - cam.y) < DIAG * 1.2);
     let bigs = shapes.filter(s => s.size > 40).length;
-    while (bigs < targetCount()) { spawn(false); bigs++; }
+    for (let i = 0; bigs < targetCount() && i < 4; i++) if (spawn('edge')) bigs++;
+    travel += Math.abs(car.v) * dt;
+    if (travel > (mode === 'game' ? 420 : 280)) { travel = 0; if (shapes.length < targetCount() * (mode === 'game' ? 1.2 : 1.45)) spawn('ahead'); }
 
     if (tear) {
-      tear.age += dt; tear.x += tear.vx * dt; tear.y += tear.vy * dt;
+      tear.age += dt;
+      if (has('magnet') && alive) {
+        const dx = car.x - tear.x, dy = car.y - tear.y, d = Math.hypot(dx, dy) || 1;
+        if (d < 480) { tear.vx = mix(tear.vx, dx / d * 170, 1 - Math.pow(0.1, dt)); tear.vy = mix(tear.vy, dy / d * 170, 1 - Math.pow(0.1, dt)); }
+      }
+      tear.x += tear.vx * dt; tear.y += tear.vy * dt;
       if (alive && Math.hypot(tear.x - car.x, tear.y - car.y) < tear.size * 0.8 + 12) catchTear();
-      else if (tear.age > tear.life) { tear = null; tearTimer = rand(20, 32); }
+      else if (tear.age > tear.life) { tear = null; tearTimer = has('magnet') ? rand(15, 25) : rand(26, 40); }
     } else if ((tearTimer -= dt) <= 0) spawnTear();
 
     for (const r of ripples) {
@@ -876,9 +1939,10 @@ h1{font-family:var(--display);font-weight:400;font-size:20px;margin:0;line-heigh
   }
 
   // ================= render =================
-  const SA = new Float32Array(96), SB = new Float32Array(96);
+  const SA = new Float32Array(128), SB = new Float32Array(128);
   const RA = new Float32Array(48), RB = new Float32Array(48);
-  const BO = new Float32Array(40);
+  const BO = new Float32Array(96);
+  const OR = new Float32Array(256);
   const set = {
     f1: (P, n, a) => P.u[n] && gl.uniform1f(P.u[n], a),
     f2: (P, n, a, b) => P.u[n] && gl.uniform2f(P.u[n], a, b),
@@ -901,22 +1965,22 @@ h1{font-family:var(--display);font-weight:400;font-size:20px;margin:0;line-heigh
     const f60 = dt * 60;
 
     let n = 0;
-    for (const s of shadows) {
-      if (n >= 24) break;
-      const rx = s.x - cam.x, ry = s.y - cam.y, m = s.size * 1.3 + 180;
-      if (Math.abs(rx) > W / 2 + m || Math.abs(ry) > H / 2 + m) continue;
-      SA[n * 4] = rx; SA[n * 4 + 1] = ry; SA[n * 4 + 2] = s.size; SA[n * 4 + 3] = s.rot;
-      SB[n * 4] = 5 * 16 + 7; SB[n * 4 + 1] = 0; SB[n * 4 + 2] = 0; SB[n * 4 + 3] = clamp(s.age / 0.8, 0, 1);
+    const put = (x, y, size, rot, code, by, bz, bw) => {
+      if (n >= 32) return;
+      const rx = x - cam.x, ry = y - cam.y, m = size * 1.3 + 180;
+      if (Math.abs(rx) > W / 2 + m || Math.abs(ry) > H / 2 + m) return;
+      SA[n * 4] = rx; SA[n * 4 + 1] = ry; SA[n * 4 + 2] = size; SA[n * 4 + 3] = rot;
+      SB[n * 4] = code; SB[n * 4 + 1] = by; SB[n * 4 + 2] = bz; SB[n * 4 + 3] = bw;
       n++;
+    };
+    if (boss) {
+      const fade = clamp(boss.age / 1.2, 0, 1);
+      for (const o of boss.bodies) if (!o.dead && o.role !== 'none' && o.alpha > 0.01) put(o.x, o.y, o.size, o.rot, o.code, o.by, o.flash, o.alpha * fade);
     }
-    for (const s of shapes) {
-      if (n >= 24) break;
-      const rx = s.x - cam.x, ry = s.y - cam.y, m = s.size * 1.3 + 180;
-      if (Math.abs(rx) > W / 2 + m || Math.abs(ry) > H / 2 + m) continue;
-      SA[n * 4] = rx; SA[n * 4 + 1] = ry; SA[n * 4 + 2] = s.size; SA[n * 4 + 3] = s.rot;
-      SB[n * 4] = s.type * 16 + s.n; SB[n * 4 + 1] = s.prm; SB[n * 4 + 2] = s.hue + hue; SB[n * 4 + 3] = clamp(s.age / 1.2, 0, 1);
-      n++;
-    }
+    for (const w of watchers) put(w.x, w.y, w.size, w.rot, 6 * 16 + 1, w.fireT < 0.6 ? 1 - w.fireT / 0.6 : 0, w.flash, clamp(w.age / 0.8, 0, 1));
+    for (const s of shadows) put(s.x, s.y, s.size, s.rot, 5 * 16 + 7, 0, 0, clamp(s.age / 0.8, 0, 1));
+    for (const s of shapes) put(s.x, s.y, s.size, s.rot, s.type * 16 + s.n, s.prm, s.hue + hue, clamp(s.age / 1.2, 0, 1));
+
     let rn = 0;
     for (const r of ripples) {
       if (r.delay > 0 || rn >= 12) continue;
@@ -926,7 +1990,16 @@ h1{font-family:var(--display);font-weight:400;font-size:20px;margin:0;line-heigh
     }
     let bn = 0;
     for (const b of bolts) {
+      if (bn >= 24) break;
       BO[bn * 4] = b.x - cam.x; BO[bn * 4 + 1] = b.y - cam.y; BO[bn * 4 + 2] = b.dx; BO[bn * 4 + 3] = b.dy; bn++;
+    }
+    let on = 0;
+    for (const o of orbs) {
+      if (on >= 64) break;
+      const rx = o.x - cam.x, ry = o.y - cam.y;
+      if (Math.abs(rx) > W / 2 + 90 || Math.abs(ry) > H / 2 + 90) continue;
+      OR[on * 4] = rx; OR[on * 4 + 1] = ry; OR[on * 4 + 2] = o.r; OR[on * 4 + 3] = Math.min(1, o.life / 0.5);
+      on++;
     }
 
     let tearA = [0, 0, 0, 0];
@@ -935,16 +2008,31 @@ h1{font-family:var(--display);font-weight:400;font-size:20px;margin:0;line-heigh
       tearA = [tear.x - cam.x, tear.y - cam.y, tear.size, a];
     }
 
+    const lampU = P => {
+      set.f1(P, 'uDark', darkK);
+      set.f4(P, 'uLamp', car.x - cam.x, car.y - cam.y, car.a, 0);
+      if (boss && boss.kind === 'night') set.f4(P, 'uFlare', boss.x - cam.x, boss.y - cam.y, boss.flare, 0);
+      else set.f4(P, 'uFlare', 0, 0, 0, 0);
+    };
+
     // 1. scene
-    use(PS, scene);
+    use(PS, scene); lampU(PS);
     set.f2(PS, 'uRes', scene.w, scene.h); set.f1(PS, 'uDpr', scene.w / W); set.f1(PS, 'uTime', t);
     set.i1(PS, 'uN', n); set.v4(PS, 'uSA', SA); set.v4(PS, 'uSB', SB);
     set.i1(PS, 'uRN', rn); set.v4(PS, 'uRA', RA); set.v4(PS, 'uRB', RB);
     set.i1(PS, 'uBN', bn); set.v4(PS, 'uBo', BO);
+    set.i1(PS, 'uON', on); set.v4(PS, 'uOrb', OR);
     set.f4(PS, 'uCar', car.x - cam.x, car.y - cam.y, car.a, Math.abs(car.v) / 400);
     set.f4(PS, 'uTear', ...tearA);
     const carVis = over || deadT > 0 ? 0 : invuln > 0 ? (Math.floor(t * 9) % 2 ? 1 : 0.25) : 1;
     set.f1(PS, 'uCarVis', carVis);
+    set.f1(PS, 'uShield', tearShield || (has('shield') && shieldT <= 0) ? 1 : has('shield') ? 0.12 : 0);
+    set.f1(PS, 'uBig', has('big') ? 1.7 : 1);
+    if (boss && boss.kind === 'bridge') {
+      set.f4(PS, 'uBeam', boss.x - cam.x, boss.y - cam.y, boss.beamA, BEAM_LEN);
+      set.f1(PS, 'uBeamOn', (boss.beamLive ? 1 : 0.3 + 0.12 * Math.sin(t * 30)) * clamp(boss.age / 1.2, 0, 1));
+      set.f1(PS, 'uBeamGap', 1);
+    } else set.f1(PS, 'uBeamOn', 0);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
 
     // 2. liquid light background
@@ -971,7 +2059,12 @@ h1{font-family:var(--display);font-weight:400;font-size:20px;margin:0;line-heigh
     // 4. composite
     use(PO, null);
     bindTex(PO, 'uFb', 0, fbB); bindTex(PO, 'uScene', 1, scene); bindTex(PO, 'uBg', 2, bgT);
-    set.f2(PO, 'uRes', cv.width, cv.height); set.f1(PO, 'uTime', t); set.f1(PO, 'uTrip', tr);
+    set.f2(PO, 'uRes', cv.width, cv.height); set.f1(PO, 'uTime', t); set.f1(PO, 'uTrip', tr); set.f1(PO, 'uInv', inv); set.f1(PO, 'uSea', seaK); set.f1(PO, 'uWarp', reduce ? warpK * 0.3 : warpK); set.f1(PO, 'uGray', grayK); set.f1(PO, 'uKal', reduce ? kalK * 0.4 : kalK);
+    const pal3 = invTheme === 'winter'
+      ? [[0.9, 0.95, 1.0], [0.62, 0.8, 0.97], [0.4, 0.6, 0.9], [0.04, 0.1, 0.28], [0.5, 0.95, 1.0]]
+      : [[0.965, 0.95, 0.93], [0.8, 0.03, 0.07], [0.3, 0.0, 0.02], [0.03, 0.0, 0.01], [1.0, 0.12, 0.16]];
+    ['uPaper', 'uLiq', 'uLiq2', 'uInk', 'uDet'].forEach((n, i) => PO.u[n] && gl.uniform3f(PO.u[n], pal3[i][0], pal3[i][1], pal3[i][2]));
+    set.f1(PO, 'uSnow', invTheme === 'winter' ? 1 : 0); set.f1(PO, 'uDpr', cv.width / W); lampU(PO);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
 
     const tmp = fbA; fbA = fbB; fbB = tmp;
@@ -992,5 +2085,3 @@ h1{font-family:var(--display);font-weight:400;font-size:20px;margin:0;line-heigh
   requestAnimationFrame(frame);
 })();
 </script>
-
-</body></html>
